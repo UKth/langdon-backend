@@ -11,11 +11,12 @@ datasource db {
 }
 
 model College {
-  id         Int     @id @default(autoincrement())
-  mailFooter String  @unique
-  name       String  @unique
-  activated  Boolean @default(false)
+  id         Int      @id @default(autoincrement())
+  mailFooter String   @unique
+  name       String   @unique
+  activated  Boolean  @default(false)
   User       User[]
+  Course     Course[]
 }
 
 model User {
@@ -32,4 +33,77 @@ model Token {
   email     String   @unique
   token     Int
   updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id                              Int     @id @default(autoincrement())
+  college                         College @relation(fields: [collegeId], references: [id])
+  courseId                        String // 000441
+  termCode                        Int //1232
+  subjectCode                     Int //112
+  courseDesignation               String
+  courseDesignationCompressed     String // whitespace removed
+  fullCourseDesignation           String
+  fullCourseDesignationCompressed String // whitespace removed
+  minimumCredits                  Int
+  maximumCredits                  Int
+  title                           String
+  classes                         Class[]
+  collegeId                       Int
+}
+
+model Class {
+  id       Int       @id @default(autoincrement())
+  course   Course    @relation(fields: [courseId], references: [id])
+  courseId Int
+  sections Section[] // probably 1~2
+}
+
+// per class type
+model Section {
+  id            Int            @id @default(autoincrement())
+  class         Class          @relation(fields: [classId], references: [id])
+  type          String // "LEC", "DIS"
+  sectionNumber String // 001, 301
+  classId       Int
+  instructor    Instructor     @relation(fields: [instructorId], references: [id])
+  instructorId  Int
+  classMeetings ClassMeeting[]
+}
+
+model ClassMeeting {
+  id                  Int       @id @default(autoincrement())
+  section             Section   @relation(fields: [sectionId], references: [id])
+  meetingOrExamNumber String
+  meetingType         String
+  meetingTimeStart    Int
+  meetingTimeEnd      Int
+  meetingDays         String?
+  building            Building? @relation(fields: [buildingId], references: [id])
+  room                String?
+  examDate            Int?
+  buildingId          Int?
+  sectionId           Int
+}
+
+model Building {
+  id            Int            @id @default(autoincrement())
+  buildingCode  String         @unique
+  buildingName  String
+  streetAddress String
+  latitude      Float
+  longitude     Float
+  classMeetings ClassMeeting[]
+}
+
+model Instructor {
+  id         Int       @id @default(autoincrement())
+  netid      String    @unique
+  emplid     String
+  pvi        String
+  firstName  String
+  middleName String?
+  lastName   String
+  email      String
+  sections   Section[]
 }
