@@ -21,10 +21,14 @@ model College {
 
 model User {
   id        Int      @id @default(autoincrement())
+  netId     String
   email     String   @unique
   college   College  @relation(fields: [collegeId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  firstName String
+  lastName  String
+  // campusId  Int
   collegeId Int
 }
 
@@ -63,11 +67,11 @@ model Class {
 model Section {
   id            Int            @id @default(autoincrement())
   class         Class          @relation(fields: [classId], references: [id])
-  type          String // "LEC", "DIS"
-  sectionNumber String // 001, 301
+  type          String? // "LEC", "DIS"
+  sectionNumber String? // 001, 301
   classId       Int
-  instructor    Instructor     @relation(fields: [instructorId], references: [id])
-  instructorId  Int
+  instructor    Instructor?    @relation(fields: [instructorId], references: [id])
+  instructorId  Int?
   classMeetings ClassMeeting[]
 }
 
@@ -76,8 +80,8 @@ model ClassMeeting {
   section             Section   @relation(fields: [sectionId], references: [id])
   meetingOrExamNumber String
   meetingType         String
-  meetingTimeStart    Int
-  meetingTimeEnd      Int
+  meetingTimeStart    Int?
+  meetingTimeEnd      Int?
   meetingDays         String?
   building            Building? @relation(fields: [buildingId], references: [id])
   room                String?
@@ -90,9 +94,9 @@ model Building {
   id            Int            @id @default(autoincrement())
   buildingCode  String         @unique
   buildingName  String
-  streetAddress String
-  latitude      Float
-  longitude     Float
+  streetAddress String?
+  latitude      Float?
+  longitude     Float?
   classMeetings ClassMeeting[]
 }
 

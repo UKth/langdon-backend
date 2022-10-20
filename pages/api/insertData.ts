@@ -29,17 +29,23 @@ async function handler(
     return res.status(400).json({ ok: false, error: "error1" });
   }
 
-  for (var i = 0; i < 10; i++) {
+  const dataNum = data.length;
+  for (let i = 0; i < dataNum; i++) {
+    console.log("i:", i, "/ " + dataNum + " ...");
+
     const courseData = data[i];
-    const course = await client.course.create({
+    // console.log(courseData);
+
+    const newCourse = await client.course.create({
       data: {
         college: {
           connect: {
             id: college?.id,
           },
         },
+        courseId: courseData.courseId,
         termCode: +courseData.termCode,
-        subjectCode: +courseData.subject.subjectCode,
+        subjectCode: +courseData.subjectCode,
         courseDesignation: courseData.courseDesignationRaw,
         courseDesignationCompressed: courseData.courseDesignationRaw.replace(
           / /g,
@@ -51,77 +57,111 @@ async function handler(
         minimumCredits: courseData.minimumCredits,
         maximumCredits: courseData.maximumCredits,
         title: courseData.title,
-        classes: {
-          createMany: {
-            data: courseData.classes.map((cls) => ({
-              sections: {
-                createMany: {
-                  data: cls.map((section) => ({
-                    type: section.type,
-                    sectionNumber: section.sectionNumber,
-                    instructor: {
-                      connectOrCreate: {
-                        where: {
-                          netid: section.instructor.personAttributes.netid,
-                        },
-                        create: {
-                          netid: section.instructor.personAttributes.netid,
-                          emplid: section.instructor.personAttributes.emplid,
-                          pvi: section.instructor.personAttributes.pvi,
-                          firstName:
-                            section.instructor.personAttributes.name.first,
-                          middleName:
-                            section.instructor.personAttributes.name.middle,
-                          lastName:
-                            section.instructor.personAttributes.name.last,
-                          email: section.instructor.personAttributes.email,
-                        },
-                      },
-                    },
-                    classMeetings: {
-                      createMany: {
-                        data: section.classMeetings.map((meeting) => ({
-                          meetingOrExamNumber: meeting.meetingOrExamNumber,
-                          meetingType: meeting.meetingType,
-                          meetingTimeStart: meeting.meetingTimeStart,
-                          meetingTimeEnd: meeting.meetingTimeEnd,
-                          meetingDays: meeting.meetingDays,
-                          ...(meeting.building
-                            ? {
-                                building: {
-                                  connectOrCreate: {
-                                    where: {
-                                      buildingCode:
-                                        meeting.building?.buildingCode,
-                                    },
-                                    create: {
-                                      buildingCode:
-                                        meeting.building.buildingCode,
-                                      buildingName:
-                                        meeting.building.buildingName,
-                                      streetAddress:
-                                        meeting.building.streetAddress,
-                                      latitude: meeting.building.latitude,
-                                      longitude: meeting.building.longitude,
-                                    },
-                                  },
-                                },
-                              }
-                            : {}),
-                          room: meeting.room,
-                          examDate: meeting.examDate,
-                        })),
-                      },
-                    },
-                  })),
-                },
-              },
-            })),
-          },
-        },
       },
     });
+
+    for (let j = 0; j < courseData.classes.length; j++) {
+      // console.log(" j:", j, "/ " + courseData.classes.length + " ...");
+      const newClass = await client.class.create({
+        data: {
+          course: {
+            connect: {
+              id: newCourse.id,
+            },
+          },
+        },
+      });
+
+      const sections = courseData.classes[j].sections;
+
+      for (let k = 0; k < sections.length; k++) {
+        // console.log("  k:", k, "/ " + sections.length + " ...");
+        const sectionData = sections[k];
+        const newSection = await client.section.create({
+          data: {
+            class: {
+              connect: {
+                id: newClass.id,
+              },
+            },
+            type: sectionData.type,
+            sectionNumber: sectionData.sectionNumber,
+            ...(sectionData.instructor &&
+            sectionData.instructor.personAttributes.netid
+              ? {
+                  instructor: {
+                    connectOrCreate: {
+                      where: {
+                        netid: sectionData.instructor.personAttributes.netid,
+                      },
+                      create: {
+                        netid: null,
+                        emplid: sectionData.instructor.personAttributes.emplid,
+                        pvi: sectionData.instructor.personAttributes.pvi,
+                        firstName:
+                          sectionData.instructor.personAttributes.name.first,
+                        middleName:
+                          sectionData.instructor.personAttributes.name.middle,
+                        lastName:
+                          sectionData.instructor.personAttributes.name.last,
+                        email: sectionData.instructor.personAttributes.email,
+                      },
+                    },
+                  },
+                }
+              : {}),
+          },
+        });
+        for (let l = 0; l < sectionData.classMeetings.length; l++) {
+          // console.log(
+          //   "   l:",
+          //   l,
+          //   "/ " + sectionData.classMeetings.length + " ..."
+          // );
+          const meetingData = sectionData.classMeetings[l];
+          const newMeeting = await client.classMeeting.create({
+            data: {
+              section: {
+                connect: {
+                  id: newSection.id,
+                },
+              },
+              meetingOrExamNumber: meetingData.meetingOrExamNumber,
+              meetingType: meetingData.meetingType,
+              meetingTimeStart: meetingData.meetingTimeStart,
+              meetingTimeEnd: meetingData.meetingTimeEnd,
+              meetingDays: meetingData.meetingDays,
+              ...(meetingData.building
+                ? {
+                    building: {
+                      connectOrCreate: {
+                        where: {
+                          buildingCode: meetingData.building?.buildingCode,
+                        },
+                        create: {
+                          buildingCode: meetingData.building.buildingCode,
+                          buildingName: meetingData.building.buildingName,
+                          streetAddress: meetingData.building.streetAddress,
+                          latitude: meetingData.building.latitude,
+                          longitude: meetingData.building.longitude,
+                        },
+                      },
+                    },
+                  }
+                : {}),
+              room: meetingData.room,
+              examDate: meetingData.examDate,
+            },
+          });
+        }
+      }
+    }
+
+    if (!newCourse) {
+      return res.status(400).json({ ok: false, error: "error2" });
+    }
   }
+  return res.send({ ok: true });
 }
 
 export default handler;
