@@ -30,7 +30,7 @@ async function handler(
   }
 
   const dataNum = data.length;
-  for (let i = 0; i < dataNum; i++) {
+  for (let i = 3430; i < dataNum; i++) {
     console.log("i:", i, "/ " + dataNum + " ...");
 
     const courseData = data[i];

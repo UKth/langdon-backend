@@ -127,7 +127,7 @@ const Home: NextPage = () => {
                         <p>
                           {meetingTimeStart.getHours() +
                             ":" +
-                            meetingTimeEnd.getMinutes() +
+                            meetingTimeStart.getMinutes() +
                             " ~ " +
                             meetingTimeEnd.getHours() +
                             ":" +
