@@ -14,3 +14,5 @@ export const errorMessages = {
     createUserFailed: "Can't register user. Please try again.",
   },
 };
+
+export const EXAMDATE_OFFSET = 1670750000000; // why??
