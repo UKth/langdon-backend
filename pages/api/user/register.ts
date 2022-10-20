@@ -78,6 +78,7 @@ async function handler(
     user = await client.user.create({
       data: {
         email,
+        netId: email.split("@")[0],
         firstName,
         lastName,
         college: {
