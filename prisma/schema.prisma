@@ -28,7 +28,6 @@ model User {
   updatedAt DateTime @updatedAt
   firstName String
   lastName  String
-  // campusId  Int
   collegeId Int
 }
 

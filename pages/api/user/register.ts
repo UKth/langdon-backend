@@ -16,7 +16,17 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { email, token } = req.body;
+  const {
+    email,
+    firstName,
+    lastName,
+    token,
+  }: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    token: number;
+  } = req.body;
 
   const college = await client.college.findUnique({
     where: {
@@ -62,11 +72,14 @@ async function handler(
       email,
     },
   });
+  console.log(firstName);
 
   if (!user) {
     user = await client.user.create({
       data: {
         email,
+        firstName,
+        lastName,
         college: {
           connect: {
             id: college.id,
