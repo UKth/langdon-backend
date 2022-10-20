@@ -95,7 +95,7 @@ async function handler(
                         netid: sectionData.instructor.personAttributes.netid,
                       },
                       create: {
-                        netid: null,
+                        netid: sectionData.instructor.personAttributes.netid,
                         emplid: sectionData.instructor.personAttributes.emplid,
                         pvi: sectionData.instructor.personAttributes.pvi,
                         firstName:
