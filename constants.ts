@@ -1,7 +1,8 @@
 const min_ts = 60 * 1000;
 export const VERIFICATION_TOKEN_EXPIRATION = 3 * min_ts;
-export const JWT_TOKEN_EXPIRATION = 60 * 24 * 60 * min_ts;
-export const JWT_TOKEN_RENEWAL = 20 * 24 * min_ts;
+export const ACCESS_TOKEN_EXPIRATION = 1 * 60 * min_ts;
+export const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * min_ts; // 30days
+export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
 
 export const errorMessages = {
   user: {

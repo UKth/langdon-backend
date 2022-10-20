@@ -17,53 +17,28 @@ async function handler(
     // no message
   }
 
-  const college = await client.college.findUnique({
-    where: {
-      mailFooter: "wisc.edu",
-    },
-  });
-
-  if (!college) {
-    return res
-      .status(400)
-      .json({ ok: false, error: errorMessages.user.collegeForEmailNotExist });
-  }
-
-  const courseData = await client.course.findMany({
+  const collegesData = await client.college.findMany({
     where: {
       OR: [
         {
-          courseDesignationCompressed: {
+          name: {
             contains: keyword,
             mode: "insensitive",
           },
         },
         {
-          fullCourseDesignationCompressed: {
-            contains: keyword,
-            mode: "insensitive",
-          },
-        },
-        {
-          title: {
+          mailFooter: {
             contains: keyword,
             mode: "insensitive",
           },
         },
       ],
     },
-    include: {
-      classes: {
-        include: {
-          sections: true,
-        },
-      },
-    },
   });
 
   return res.json({
     ok: true,
-    courseData,
+    collegesData,
   });
 }
 

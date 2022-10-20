@@ -3,8 +3,9 @@ import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
 import {
+  ACCESS_TOKEN_EXPIRATION,
   errorMessages,
-  JWT_TOKEN_EXPIRATION,
+  REFRESH_TOKEN_EXPIRATION,
   VERIFICATION_TOKEN_EXPIRATION,
 } from "@constants";
 import jwt from "jsonwebtoken";
@@ -96,24 +97,28 @@ async function handler(
       .json({ ok: false, error: errorMessages.user.createUserFailed });
   }
 
-  const data = {
-    id: user.id,
-    collegeId: college.id,
-    expiration: Date.now() + JWT_TOKEN_EXPIRATION,
-  };
-
-  const jwtToken = jwt.sign(
+  const refreshToken = jwt.sign(
     {
       id: user.id,
       collegeId: college.id,
-      expiration: Date.now() + JWT_TOKEN_EXPIRATION,
+      expiration: Date.now() + REFRESH_TOKEN_EXPIRATION,
+    },
+    process.env.SECRET_KEY || ""
+  );
+
+  const accessToken = jwt.sign(
+    {
+      id: user.id,
+      collegeId: college.id,
+      expiration: Date.now() + ACCESS_TOKEN_EXPIRATION,
     },
     process.env.SECRET_KEY || ""
   );
 
   return res.json({
     ok: true,
-    token: jwtToken,
+    refreshToken,
+    accessToken,
   });
 }
 
