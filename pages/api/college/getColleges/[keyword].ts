@@ -15,7 +15,7 @@ async function handler(
     // no message
   }
 
-  const collegesData = await client.college.findMany({
+  const collegeData = await client.college.findMany({
     where: {
       OR: [
         {
@@ -36,7 +36,7 @@ async function handler(
 
   return res.json({
     ok: true,
-    collegesData,
+    collegeData,
   });
 }
 
