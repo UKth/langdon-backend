@@ -105,9 +105,9 @@ model Instructor {
   netid      String    @unique
   emplid     String
   pvi        String
-  firstName  String
+  firstName  String?
   middleName String?
-  lastName   String
-  email      String
+  lastName   String?
+  email      String?
   sections   Section[]
 }
