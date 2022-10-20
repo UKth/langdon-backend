@@ -2,11 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
-import {
-  errorMessages,
-  JWT_TOKEN_EXPIRATION,
-  VERIFICATION_TOKEN_EXPIRATION,
-} from "@constants";
+import { errorMessages, VERIFICATION_TOKEN_EXPIRATION } from "@constants";
 import jwt from "jsonwebtoken";
 
 import { data } from "../../courseData/data_parsed";

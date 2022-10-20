@@ -2,8 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
-import { errorMessages } from "@constants";
-
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
