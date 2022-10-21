@@ -115,7 +115,13 @@ async function handler(
 
     res.send({
       ok: true,
-      ...(user ? { user } : {}),
+      ...(user
+        ? {
+            user: {
+              id: user.id,
+            },
+          }
+        : {}),
     });
   } catch (error) {
     res.send({ ok: false, error });
