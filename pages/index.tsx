@@ -47,10 +47,10 @@ const Home: NextPage = () => {
   return (
     <div className="flex flex-row">
       <div className="flex-1">
-        <div className="p-4">
+        <div className="p-1">
           <p>enter keyword</p>
           <input
-            className="border p-1 mr-2 rounded"
+            className="border p-1 rounded"
             onChange={(e) => setKeyword(e.target.value.replace(/ /g, ""))}
           />
           <button
@@ -61,11 +61,11 @@ const Home: NextPage = () => {
           </button>
         </div>
         {searchedData ? (
-          <div className="border rounded m-4 p-4">
+          <div className="border rounded m-2 p-2">
             {searchedData.map((course) => (
               <div key={course.id}>
                 <button
-                  className="bg-blue-200 m-2 rounded hover:scale-95 w-full text-sm md:text-lg"
+                  className="bg-blue-200 mb-2 rounded hover:scale-95 w-full text-sm md:text-lg"
                   onClick={() => setSelectedCourse(course)}
                 >
                   <p>{course.title}</p>
@@ -73,7 +73,7 @@ const Home: NextPage = () => {
                   <p>{course.fullCourseDesignation}</p>
                 </button>
                 {selectedCourse?.id === course.id ? (
-                  <div className="px-4 w-2/5">
+                  <div className="w-2/5">
                     {course.classes.map((cls) => (
                       <button
                         key={cls.id}
@@ -95,7 +95,7 @@ const Home: NextPage = () => {
         ) : null}
       </div>
       {classData ? (
-        <div className="flex-1 p-4">
+        <div className="flex-1 py-4">
           {classData.sections.map((section) => (
             <div key={section.id}>
               <p>
