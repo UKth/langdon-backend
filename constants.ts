@@ -15,6 +15,7 @@ export const errorMessages = {
     invalidUserCreateParams: "First name, last name, and email is required.",
     createUserFailed: "Can't register user. Please try again.",
     userNotFound: "Can't find user",
+    userAlreadyExistForEmail: "User already exist. Please try again.",
   },
 };
 

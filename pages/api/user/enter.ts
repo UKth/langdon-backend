@@ -89,6 +89,20 @@ async function handler(
         .json({ ok: false, error: errorMessages.user.invalidUserCreateParams });
     }
 
+    const emailUser = await client.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (emailUser) {
+      return res
+        .status(400)
+        .json({
+          ok: false,
+          error: errorMessages.user.userAlreadyExistForEmail,
+        });
+    }
+
     user = await client.user.create({
       data: {
         email,
