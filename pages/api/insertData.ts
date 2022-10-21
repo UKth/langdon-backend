@@ -14,8 +14,6 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { email, token } = req.body;
-
   const college = await client.college.findUnique({
     where: {
       mailFooter: "wisc.edu",

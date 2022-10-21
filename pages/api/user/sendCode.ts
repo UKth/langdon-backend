@@ -32,40 +32,40 @@ async function handler(
       .json({ ok: false, error: errorMessages.user.collegeForEmailNotExist });
   }
 
-  const token = Math.floor(100000 + Math.random() * 900000);
+  const code = Math.floor(100000 + Math.random() * 900000);
 
-  const foundToken = await client.token.findUnique({
+  const foundCode = await client.verificationCode.findUnique({
     where: {
       email,
     },
   });
 
-  let newToken;
+  let newCode;
 
-  if (foundToken) {
-    newToken = await client.token.update({
+  if (foundCode) {
+    newCode = await client.verificationCode.update({
       where: {
         email,
       },
       data: {
-        token,
+        code,
       },
     });
 
-    if (!newToken) {
+    if (!newCode) {
       return res
         .status(400)
         .json({ ok: false, error: errorMessages.user.tokenNotCreated });
     }
   } else {
-    newToken = await client.token.create({
+    newCode = await client.verificationCode.create({
       data: {
-        token,
+        code,
         email,
       },
     });
 
-    if (!newToken) {
+    if (!newCode) {
       return res
         .status(400)
         .json({ ok: false, error: errorMessages.user.tokenNotCreated });
@@ -93,7 +93,7 @@ async function handler(
     const mailhtml = `
       <h3>Verification Code</h3>
       <br>
-      <h3>${token}</h3>
+      <h3>${code}</h3>
   `;
 
     const mailOption: SendMailOptions = {
