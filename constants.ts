@@ -12,7 +12,9 @@ export const errorMessages = {
     codeForEmailNotExist: "Code not found.",
     codeExpired: "Code has been expired. Please try again.", //
     codeNotMatch: "Wrong code value.",
+    invalidUserCreateParams: "First name, last name, and email is required.",
     createUserFailed: "Can't register user. Please try again.",
+    userNotFound: "Can't find user",
   },
 };
 

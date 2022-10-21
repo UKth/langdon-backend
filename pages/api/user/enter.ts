@@ -19,11 +19,13 @@ async function handler(
     firstName,
     lastName,
     code,
+    userId,
   }: {
     email: string;
-    firstName: string;
-    lastName: string;
     code: number;
+    firstName?: string;
+    lastName?: string;
+    userId?: number;
   } = req.body;
 
   const college = await client.college.findUnique({
@@ -65,14 +67,28 @@ async function handler(
       .json({ ok: false, error: errorMessages.user.codeExpired });
   }
 
-  let user = await client.user.findUnique({
-    where: {
-      email,
-    },
-  });
-  console.log(firstName);
+  let user;
 
-  if (!user) {
+  if (userId) {
+    user = await client.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    console.log(firstName);
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ ok: false, error: errorMessages.user.userNotFound });
+    }
+  } else {
+    if (!firstName || !lastName) {
+      return res
+        .status(400)
+        .json({ ok: false, error: errorMessages.user.invalidUserCreateParams });
+    }
+
     user = await client.user.create({
       data: {
         email,
