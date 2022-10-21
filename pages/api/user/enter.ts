@@ -74,8 +74,10 @@ async function handler(
       where: {
         id: userId,
       },
+      include: {
+        college: true,
+      },
     });
-    console.log(firstName);
 
     if (!user) {
       return res
@@ -94,13 +96,12 @@ async function handler(
         email,
       },
     });
+
     if (emailUser) {
-      return res
-        .status(400)
-        .json({
-          ok: false,
-          error: errorMessages.user.userAlreadyExistForEmail,
-        });
+      return res.status(400).json({
+        ok: false,
+        error: errorMessages.user.userAlreadyExistForEmail,
+      });
     }
 
     user = await client.user.create({
@@ -114,6 +115,9 @@ async function handler(
             id: college.id,
           },
         },
+      },
+      include: {
+        college: true,
       },
     });
   }
@@ -146,6 +150,7 @@ async function handler(
     ok: true,
     refreshToken,
     accessToken,
+    user,
   });
 }
 
