@@ -128,15 +128,6 @@ async function handler(
       .json({ ok: false, error: errorMessages.user.createUserFailed });
   }
 
-  const refreshToken = jwt.sign(
-    {
-      id: user.id,
-      collegeId: college.id,
-      expiration: Date.now() + REFRESH_TOKEN_EXPIRATION,
-    },
-    process.env.SECRET_KEY || ""
-  );
-
   const accessToken = jwt.sign(
     {
       id: user.id,
@@ -146,10 +137,19 @@ async function handler(
     process.env.SECRET_KEY || ""
   );
 
+  const refreshToken = jwt.sign(
+    {
+      id: user.id,
+      collegeId: college.id,
+      expiration: Date.now() + REFRESH_TOKEN_EXPIRATION,
+    },
+    process.env.SECRET_KEY || ""
+  );
+
   return res.json({
     ok: true,
-    refreshToken,
     accessToken,
+    refreshToken,
     user,
   });
 }

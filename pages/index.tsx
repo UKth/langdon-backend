@@ -65,7 +65,7 @@ const Home: NextPage = () => {
             {searchedData.map((course) => (
               <div key={course.id}>
                 <button
-                  className="bg-blue-200 m-2 rounded hover:scale-95 w-full"
+                  className="bg-blue-200 m-2 rounded hover:scale-95 w-full text-sm md:text-lg"
                   onClick={() => setSelectedCourse(course)}
                 >
                   <p>{course.title}</p>
