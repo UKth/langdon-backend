@@ -6,12 +6,9 @@ import {
   ACCESS_TOKEN_EXPIRATION,
   errorMessages,
   REFRESH_TOKEN_EXPIRATION,
-  VERIFICATION_TOKEN_EXPIRATION,
+  VERIFICATION_CODE_EXPIRATION,
 } from "@constants";
 import jwt from "jsonwebtoken";
-
-// mail.setApiKey(process.env.SENDGRID_KEY!);
-// const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 
 async function handler(
   req: NextApiRequest,
@@ -21,12 +18,12 @@ async function handler(
     email,
     firstName,
     lastName,
-    token,
+    code,
   }: {
     email: string;
     firstName: string;
     lastName: string;
-    token: number;
+    code: number;
   } = req.body;
 
   const college = await client.college.findUnique({
@@ -41,31 +38,31 @@ async function handler(
       .json({ ok: false, error: errorMessages.user.collegeForEmailNotExist });
   }
 
-  const foundToken = await client.token.findUnique({
+  const foundCode = await client.verificationCode.findUnique({
     where: {
       email,
     },
   });
 
-  if (!foundToken) {
+  if (!foundCode) {
     return res
       .status(400)
-      .json({ ok: false, error: errorMessages.user.tokenForEmailNotExist });
+      .json({ ok: false, error: errorMessages.user.codeForEmailNotExist });
   }
 
-  if (foundToken.token !== token) {
+  if (foundCode.code !== code) {
     return res
       .status(400)
-      .json({ ok: false, error: errorMessages.user.tokenNotMatch });
+      .json({ ok: false, error: errorMessages.user.codeNotMatch });
   }
 
   if (
-    Date.now() - foundToken.updatedAt.valueOf() >
-    VERIFICATION_TOKEN_EXPIRATION + 5
+    Date.now() - foundCode.updatedAt.valueOf() >
+    VERIFICATION_CODE_EXPIRATION + 5 * 1000
   ) {
     return res
       .status(400)
-      .json({ ok: false, error: errorMessages.user.tokenExpired });
+      .json({ ok: false, error: errorMessages.user.codeExpired });
   }
 
   let user = await client.user.findUnique({

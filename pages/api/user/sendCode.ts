@@ -55,7 +55,7 @@ async function handler(
     if (!newCode) {
       return res
         .status(400)
-        .json({ ok: false, error: errorMessages.user.tokenNotCreated });
+        .json({ ok: false, error: errorMessages.user.codeNotCreated });
     }
   } else {
     newCode = await client.verificationCode.create({
@@ -68,7 +68,7 @@ async function handler(
     if (!newCode) {
       return res
         .status(400)
-        .json({ ok: false, error: errorMessages.user.tokenNotCreated });
+        .json({ ok: false, error: errorMessages.user.codeNotCreated });
     }
   }
 
