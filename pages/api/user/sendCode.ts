@@ -26,6 +26,12 @@ async function handler(
     },
   });
 
+  const user = await client.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
   if (!college) {
     return res
       .status(400)
@@ -107,7 +113,10 @@ async function handler(
 
     console.log("Email sent:", info.messageId);
 
-    res.send({ ok: true });
+    res.send({
+      ok: true,
+      ...(user ? { user } : {}),
+    });
   } catch (error) {
     res.send({ ok: false, error });
   }
