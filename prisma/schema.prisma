@@ -20,15 +20,16 @@ model College {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  netId     String
-  email     String   @unique
-  college   College  @relation(fields: [collegeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  firstName String
-  lastName  String
-  collegeId Int
+  id              Int      @id @default(autoincrement())
+  netId           String
+  email           String   @unique
+  college         College  @relation(fields: [collegeId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  firstName       String
+  lastName        String
+  collegeId       Int
+  enrolledClasses Class[]
 }
 
 model VerificationCode {
@@ -56,10 +57,11 @@ model Course {
 }
 
 model Class {
-  id       Int       @id @default(autoincrement())
-  course   Course    @relation(fields: [courseId], references: [id])
-  courseId Int
-  sections Section[] // probably 1~2
+  id            Int       @id @default(autoincrement())
+  course        Course    @relation(fields: [courseId], references: [id])
+  courseId      Int
+  sections      Section[] // probably 1~2
+  enrolledUsers User[]
 }
 
 // per class type

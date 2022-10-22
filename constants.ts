@@ -16,6 +16,12 @@ export const errorMessages = {
     createUserFailed: "Can't register user. Please try again.",
     userNotFound: "Can't find user",
     userAlreadyExistForEmail: "User already exist. Please try again.",
+    invalidToken: "Invalid token.",
+    tokenNotMatched: "Invalid token for user.",
+    tokenExpired: "Token Expired.",
+    classNotFound: "Class not found.",
+    invalidClass: "Invalid class.",
+    notEnrolledClass: "The user didn't enrolled the class.",
   },
 };
 
