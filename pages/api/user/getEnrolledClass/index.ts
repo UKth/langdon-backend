@@ -2,7 +2,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
-import { errorMessages } from "@constants";
+import {
+  ACCESS_TOKEN_EXPIRATION,
+  errorMessages,
+  REFRESH_TOKEN_EXPIRATION,
+  VERIFICATION_CODE_EXPIRATION,
+} from "@constants";
 import jwt from "jsonwebtoken";
 
 interface TokenInterface {
@@ -17,17 +22,15 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const {
-    classId,
     accessToken,
   }: {
-    classId: number;
+    userId: number;
     accessToken: string;
   } = req.body;
 
   try {
     const {
       id: userId,
-      collegeId,
       expiration,
       iat,
     } = jwt.verify(accessToken, process.env.SECRET_KEY || "") as TokenInterface;
@@ -40,27 +43,26 @@ async function handler(
       });
     }
 
-    const cls = await client.class.findUnique({
-      where: { id: classId },
-      include: {
-        course: true,
-      },
-    });
-    if (!cls) {
-      return res.status(400).json({
-        ok: false,
-        error: errorMessages.user.classNotFound,
-      });
-    }
-    if (cls.course.collegeId !== collegeId) {
-      return res.status(400).json({
-        ok: false,
-        error: errorMessages.user.invalidClass,
-      });
-    }
     const tokenUser = await client.user.findUnique({
       where: {
         id: userId,
+      },
+      include: {
+        enrolledClasses: {
+          include: {
+            course: true,
+            sections: {
+              include: {
+                classMeetings: {
+                  include: {
+                    building: true,
+                  },
+                },
+                instructor: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -71,24 +73,9 @@ async function handler(
       });
     }
 
-    const updatedUser = await client.user.update({
-      where: {
-        id: tokenUser.id,
-      },
-      data: {
-        enrolledClasses: {
-          connect: {
-            id: classId,
-          },
-        },
-      },
-      include: {
-        enrolledClasses: true,
-      },
-    });
-    console.log(updatedUser);
     return res.json({
       ok: true,
+      enrolledClasses: tokenUser.enrolledClasses,
     });
   } catch {
     return res.status(400).json({

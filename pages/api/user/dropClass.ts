@@ -2,12 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
-import {
-  ACCESS_TOKEN_EXPIRATION,
-  errorMessages,
-  REFRESH_TOKEN_EXPIRATION,
-  VERIFICATION_CODE_EXPIRATION,
-} from "@constants";
+import { errorMessages } from "@constants";
 import jwt from "jsonwebtoken";
 import { Class } from "@prisma/client";
 
@@ -32,26 +27,20 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const {
-    userId,
     classId,
     accessToken,
   }: {
-    userId: number;
     classId: number;
     accessToken: string;
   } = req.body;
 
   try {
-    const { id, collegeId, expiration, iat } = jwt.verify(
-      accessToken,
-      process.env.SECRET_KEY || ""
-    ) as TokenInterface;
-
-    if (id !== userId) {
-      return res
-        .status(400)
-        .json({ ok: false, error: errorMessages.user.tokenNotMatched });
-    }
+    const {
+      id: userId,
+      collegeId,
+      expiration,
+      iat,
+    } = jwt.verify(accessToken, process.env.SECRET_KEY || "") as TokenInterface;
 
     if (expiration > new Date()) {
       return res.status(400).json({
@@ -81,7 +70,7 @@ async function handler(
     }
     const tokenUser = await client.user.findUnique({
       where: {
-        id,
+        id: userId,
       },
       include: {
         enrolledClasses: true,
