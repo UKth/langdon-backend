@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType } from "@libs/server/util";
+import { isFriend, ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -8,13 +8,25 @@ import withHandler from "@libs/server/withHandler";
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
-  userId?: number
+  data?: {
+    userId?: number;
+  }
 ) {
+  const userId = data?.userId ?? 0;
+
   const {
     targetId,
   }: {
     targetId: number;
   } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.user.tokenNotMatched,
+    });
+  }
+
   if (!targetId) {
     return res.status(400).json({
       ok: false,
@@ -22,20 +34,7 @@ async function handler(
     });
   }
 
-  const oldFriend = await client.friend.findMany({
-    where: {
-      OR: [
-        {
-          AND: [{ userId: userId }, { friendId: targetId }],
-        },
-        {
-          AND: [{ userId: targetId }, { friendId: userId }],
-        },
-      ],
-    },
-  });
-
-  if (oldFriend) {
+  if (await isFriend(userId, targetId)) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.friend.alreadyFriend,

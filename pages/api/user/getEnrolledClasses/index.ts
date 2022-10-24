@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType } from "@libs/server/util";
+import { isFriend, ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -8,11 +8,28 @@ import withHandler from "@libs/server/withHandler";
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
-  userId?: number
+  data?: {
+    userId?: number;
+  }
 ) {
+  const userId = data?.userId ?? 0;
+
+  const {
+    targetId,
+  }: {
+    targetId?: number;
+  } = req.body;
+
+  if (targetId && !isFriend(userId, targetId)) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.class.noFriendWithTarget,
+    });
+  }
+
   const tokenUser = await client.user.findUnique({
     where: {
-      id: userId,
+      id: targetId ?? userId,
     },
     include: {
       enrolledClasses: {

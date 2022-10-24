@@ -28,6 +28,9 @@ export const errorMessages = {
     alreadyFriend: "You're already friend with target user.",
     addFriendFailed: "Failed to add friend. Please try again.",
   },
+  class: {
+    noFriendWithTarget: "You can only get your friend's classes.",
+  },
 };
 
 export const EXAMDATE_OFFSET = 1670750000000; // why??

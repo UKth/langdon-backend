@@ -7,8 +7,13 @@ import withHandler from "@libs/server/withHandler";
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
-  userId?: number
+  data?: {
+    userId?: number;
+    collegeId?: number;
+  }
 ) {
+  const userId = data?.userId ?? 0;
+
   const friends = await client.friend.findMany({
     where: {
       OR: [

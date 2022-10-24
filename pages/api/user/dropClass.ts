@@ -19,9 +19,14 @@ const includeClass = (classes: Class[], id: number) => {
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
-  userId?: number,
-  collegeId?: number
+  data?: {
+    userId?: number;
+    collegeId?: number;
+  }
 ) {
+  const userId = data?.userId ?? 0;
+  const collegeId = data?.collegeId ?? 0;
+
   const {
     classId,
   }: {

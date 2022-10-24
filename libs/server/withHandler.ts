@@ -19,8 +19,7 @@ interface ConfigType {
   handler: (
     req: NextApiRequest,
     res: NextApiResponse,
-    userId?: number,
-    collegeId?: number
+    data?: { userId?: number; collegeId?: number }
   ) => void;
   isPrivate?: boolean;
 }
@@ -47,6 +46,7 @@ export default function withHandler({
         const {
           id: userId,
           expiration,
+          collegeId,
           iat,
         } = jwt.verify(
           accessToken,
@@ -60,7 +60,7 @@ export default function withHandler({
           });
         }
 
-        await handler(req, res, userId);
+        await handler(req, res, { userId, collegeId });
       } else {
         await handler(req, res);
       }
