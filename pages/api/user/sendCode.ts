@@ -7,6 +7,7 @@ import nodemailer, {
   Transporter,
 } from "nodemailer";
 import { errorMessages } from "@constants";
+import withHandler from "@libs/server/withHandler";
 
 async function handler(
   req: NextApiRequest,
@@ -128,4 +129,4 @@ async function handler(
   }
 }
 
-export default handler;
+export default withHandler({ methods: ["POST"], handler, isPrivate: false });

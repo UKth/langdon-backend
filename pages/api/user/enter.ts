@@ -9,6 +9,7 @@ import {
   VERIFICATION_CODE_EXPIRATION,
 } from "@constants";
 import jwt from "jsonwebtoken";
+import withHandler from "@libs/server/withHandler";
 
 async function handler(
   req: NextApiRequest,
@@ -154,4 +155,4 @@ async function handler(
   });
 }
 
-export default handler;
+export default withHandler({ methods: ["POST"], handler, isPrivate: false });

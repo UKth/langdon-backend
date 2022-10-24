@@ -4,6 +4,7 @@ import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import jwt from "jsonwebtoken";
+import withHandler from "@libs/server/withHandler";
 
 // mail.setApiKey(process.env.SENDGRID_KEY!);
 // const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
@@ -57,4 +58,4 @@ async function handler(
   });
 }
 
-export default handler;
+export default withHandler({ methods: ["GET"], handler, isPrivate: false });

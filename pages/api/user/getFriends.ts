@@ -45,5 +45,4 @@ async function handler(
     enrolledClasses: tokenUser.enrolledClasses,
   });
 }
-
 export default withHandler({ methods: ["POST"], handler });

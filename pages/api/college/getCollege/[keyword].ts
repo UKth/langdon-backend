@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
+import withHandler from "@libs/server/withHandler";
 
 async function handler(
   req: NextApiRequest,
@@ -40,4 +41,4 @@ async function handler(
   });
 }
 
-export default handler;
+export default withHandler({ methods: ["GET"], handler, isPrivate: false });
