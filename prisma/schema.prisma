@@ -45,6 +45,9 @@ model Friend {
   updatedAt DateTime @updatedAt
 
   @@unique([userId, friendId])
+  @@index([userId, friendId])
+  @@index([userId])
+  @@index([friendId])
 }
 
 model VerificationCode {
@@ -52,6 +55,8 @@ model VerificationCode {
   email     String   @unique
   code      Int
   updatedAt DateTime @updatedAt
+
+  @@index([email])
 }
 
 model Course {
@@ -77,6 +82,8 @@ model Class {
   courseId      Int
   sections      Section[] // probably 1~2
   enrolledUsers User[]
+
+  @@index([courseId])
 }
 
 // per class type
@@ -89,6 +96,8 @@ model Section {
   instructor    Instructor?    @relation(fields: [instructorId], references: [id])
   instructorId  Int?
   classMeetings ClassMeeting[]
+
+  @@index([classId])
 }
 
 model ClassMeeting {
@@ -104,6 +113,8 @@ model ClassMeeting {
   examDate            Int?
   buildingId          Int?
   sectionId           Int
+
+  @@index([sectionId])
 }
 
 model Building {
