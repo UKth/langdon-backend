@@ -10,11 +10,9 @@ async function handler(
   res: NextApiResponse<ResponseType>,
   data?: {
     userId?: number;
-    collegeId?: number;
   }
 ) {
   const userId = data?.userId ?? 0;
-  const collegeId = data?.collegeId ?? 0;
 
   const {
     targetId,
@@ -22,33 +20,7 @@ async function handler(
     targetId?: number;
   } = req.body;
 
-  if (userId === targetId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.friend.addUserSelf,
-    });
-  }
-
-  const targetUser = await client.user.findUnique({
-    where: {
-      id: targetId,
-    },
-  });
-  if (!targetUser) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.userNotFound,
-    });
-  }
-
-  if (targetUser.collegeId !== collegeId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.friend.collegeNotMatched,
-    });
-  }
-
-  if (targetId && !isFriend(userId, targetId)) {
+  if (targetId && !(await isFriend(userId, targetId))) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.class.noFriendWithTarget,
