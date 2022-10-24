@@ -27,7 +27,7 @@ export const errorMessages = {
     addNoTargetId: "Target value is required.",
     alreadyFriend: "You're already friend with target user.",
     addFriendFailed: "Failed to add friend. Please try again.",
-    addUserSelf: "You can't be a friend with yourself",
+    addUserSelf: "You can't be a friend with yourself.",
     collegeNotMatched: "You can only be a friend with same college's user.",
   },
   class: {
