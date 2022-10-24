@@ -42,7 +42,7 @@ async function handler(
       iat,
     } = jwt.verify(accessToken, process.env.SECRET_KEY || "") as TokenInterface;
 
-    if (expiration > new Date()) {
+    if (expiration < new Date()) {
       return res.status(400).json({
         ok: false,
         error: errorMessages.user.tokenExpired,
@@ -117,7 +117,8 @@ async function handler(
     return res.json({
       ok: true,
     });
-  } catch {
+  } catch (err) {
+    console.log(err);
     return res.status(400).json({
       ok: false,
       error: errorMessages.user.invalidToken,
