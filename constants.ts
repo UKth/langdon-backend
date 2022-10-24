@@ -23,6 +23,11 @@ export const errorMessages = {
     invalidClass: "Invalid class.",
     notEnrolledClass: "The user didn't enrolled the class.",
   },
+  friend: {
+    addNoTargetId: "Target value is required.",
+    alreadyFriend: "You're already friend with target user.",
+    addFriendFailed: "Failed to add friend. Please try again.",
+  },
 };
 
 export const EXAMDATE_OFFSET = 1670750000000; // why??

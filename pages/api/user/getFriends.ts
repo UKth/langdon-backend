@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
-import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
 
 async function handler(
@@ -10,39 +9,31 @@ async function handler(
   res: NextApiResponse<ResponseType>,
   userId?: number
 ) {
-  const tokenUser = await client.user.findUnique({
+  const friends = await client.friend.findMany({
     where: {
-      id: userId,
+      OR: [
+        {
+          userId: userId,
+        },
+        {
+          friendId: userId,
+        },
+      ],
     },
     include: {
-      enrolledClasses: {
-        include: {
-          course: true,
-          sections: {
-            include: {
-              classMeetings: {
-                include: {
-                  building: true,
-                },
-              },
-              instructor: true,
-            },
-          },
-        },
-      },
+      user: true,
+      friend: true,
     },
   });
 
-  if (!tokenUser) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.userNotFound,
-    });
-  }
+  const friendList = friends.map((friend) =>
+    friend.userId == userId ? friend.friend : friend.user
+  );
 
   return res.json({
     ok: true,
-    enrolledClasses: tokenUser.enrolledClasses,
+    friendsData: friendList,
   });
 }
+
 export default withHandler({ methods: ["POST"], handler });
