@@ -20,16 +20,31 @@ model College {
 }
 
 model User {
-  id              Int      @id @default(autoincrement())
-  netId           String
-  email           String   @unique
-  college         College  @relation(fields: [collegeId], references: [id])
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  firstName       String
-  lastName        String
-  collegeId       Int
-  enrolledClasses Class[]
+  id                Int      @id @default(autoincrement())
+  netId             String
+  email             String   @unique
+  college           College  @relation(fields: [collegeId], references: [id])
+  firstName         String
+  lastName          String
+  collegeId         Int
+  enrolledClasses   Class[]
+  userFriends       Friend[] @relation(name: "users")
+  friendUserFriends Friend[] @relation(name: "friend_users")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Friend {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  friendId  Int
+  user      User     @relation(name: "users", fields: [userId], references: [id])
+  friend    User     @relation(name: "friend_users", fields: [friendId], references: [id])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, friendId])
 }
 
 model VerificationCode {
