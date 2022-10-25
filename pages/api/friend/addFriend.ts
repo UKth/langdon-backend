@@ -80,7 +80,7 @@ async function handler(
     },
   });
 
-  if (friendRequest?.code !== code) {
+  if (!friendRequest || friendRequest.code !== code) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.friend.invalidRequest,
