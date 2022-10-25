@@ -8,12 +8,12 @@ import withHandler from "@libs/server/withHandler";
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
-  data?: {
-    userId?: number;
+  {
+    userId,
+  }: {
+    userId: number;
   }
 ) {
-  const userId = data?.userId ?? 0;
-
   const {
     targetId,
   }: {

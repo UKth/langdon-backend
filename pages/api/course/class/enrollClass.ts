@@ -8,14 +8,14 @@ import withHandler from "@libs/server/withHandler";
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
-  data?: {
-    userId?: number;
-    collegeId?: number;
+  {
+    userId,
+    collegeId,
+  }: {
+    userId: number;
+    collegeId: number;
   }
 ) {
-  const userId = data?.userId ?? 0;
-  const collegeId = data?.collegeId ?? 0;
-
   const {
     classId,
   }: {

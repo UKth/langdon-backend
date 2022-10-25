@@ -19,38 +19,18 @@ const includeClass = (classes: Class[], id: number) => {
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
-  data?: {
-    userId?: number;
-    collegeId?: number;
+  {
+    userId,
+  }: {
+    userId: number;
   }
 ) {
-  const userId = data?.userId ?? 0;
-  const collegeId = data?.collegeId ?? 0;
-
   const {
     classId,
   }: {
     classId: number;
   } = req.body;
 
-  const cls = await client.class.findUnique({
-    where: { id: classId },
-    include: {
-      course: true,
-    },
-  });
-  if (!cls) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.classNotFound,
-    });
-  }
-  if (cls.course.collegeId !== collegeId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.invalidClass,
-    });
-  }
   const tokenUser = await client.user.findUnique({
     where: {
       id: userId,
@@ -64,13 +44,6 @@ async function handler(
     return res.status(400).json({
       ok: false,
       error: errorMessages.user.userNotFound,
-    });
-  }
-
-  if (tokenUser.id !== userId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.invalidToken,
     });
   }
 

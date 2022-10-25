@@ -19,7 +19,10 @@ interface ConfigType {
   handler: (
     req: NextApiRequest,
     res: NextApiResponse,
-    data?: { userId?: number; collegeId?: number }
+    data: {
+      userId: number;
+      collegeId: number;
+    }
   ) => void;
   isPrivate?: boolean;
 }
@@ -62,7 +65,7 @@ export default function withHandler({
 
         await handler(req, res, { userId, collegeId });
       } else {
-        await handler(req, res);
+        await handler(req, res, { userId: 0, collegeId: 0 });
       }
     } catch (error) {
       console.log(error);
