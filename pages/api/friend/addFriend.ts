@@ -109,8 +109,18 @@ async function handler(
     });
   }
 
+  await client.friendRequest.delete({
+    where: {
+      createrId_targetId: {
+        createrId: targetId,
+        targetId: userId,
+      },
+    },
+  });
+
   return res.json({
     ok: true,
   });
 }
+
 export default withHandler({ methods: ["POST"], handler });
