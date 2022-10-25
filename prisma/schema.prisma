@@ -37,6 +37,15 @@ model User {
   Comment           Comment[]
 }
 
+model FriendRequest {
+  id        Int @id @default(autoincrement())
+  createrId Int
+  targetId  Int
+  code      Int
+
+  @@unique([createrId, targetId])
+}
+
 model Friend {
   id        Int      @id @default(autoincrement())
   userId    Int

@@ -18,10 +18,8 @@ async function handler(
 ) {
   const {
     targetId,
-    code,
   }: {
     targetId: number;
-    code: number;
   } = req.body;
 
   if (!userId) {
@@ -71,38 +69,17 @@ async function handler(
     });
   }
 
-  const friendRequest = await client.friendRequest.findUnique({
-    where: {
-      createrId_targetId: {
-        createrId: targetId,
-        targetId: userId,
-      },
-    },
-  });
+  const code = Math.floor(100000 + Math.random() * 900000);
 
-  if (friendRequest?.code !== code) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.friend.invalidRequest,
-    });
-  }
-
-  const friend = await client.friend.create({
+  const friendRequest = await client.friendRequest.create({
     data: {
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
-      friend: {
-        connect: {
-          id: targetId,
-        },
-      },
+      createrId: userId,
+      targetId,
+      code,
     },
   });
 
-  if (!friend) {
+  if (!friendRequest) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.friend.addFriendFailed,
@@ -111,6 +88,7 @@ async function handler(
 
   return res.json({
     ok: true,
+    code,
   });
 }
 export default withHandler({ methods: ["POST"], handler });

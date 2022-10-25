@@ -29,6 +29,7 @@ export const errorMessages = {
     addFriendFailed: "Failed to add friend. Please try again.",
     addUserSelf: "You can't be a friend with yourself.",
     collegeNotMatched: "You can only be a friend with same college's user.",
+    invalidRequest: "The link is invalid. Please try again.",
   },
   class: {
     noFriendWithTarget: "You can only get your friend's classes.",
