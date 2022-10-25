@@ -65,9 +65,9 @@ export default function withHandler({
           });
         }
 
-        handler(req, res, { userId, collegeId });
+        await handler(req, res, { userId, collegeId });
       } else {
-        handler(req, res, { userId: 0, collegeId: 0 });
+        await handler(req, res, { userId: 0, collegeId: 0 });
       }
     } catch (error) {
       console.log(error);
