@@ -46,6 +46,7 @@ export default function withHandler({
         }: {
           accessToken: string;
         } = req.body;
+
         const {
           id: userId,
           expiration,
@@ -55,6 +56,7 @@ export default function withHandler({
           accessToken,
           process.env.SECRET_KEY || ""
         ) as TokenInterface;
+
         if (expiration < new Date()) {
           return res.status(400).json({
             ok: false,
@@ -63,9 +65,9 @@ export default function withHandler({
           });
         }
 
-        await handler(req, res, { userId, collegeId });
+        handler(req, res, { userId, collegeId });
       } else {
-        await handler(req, res, { userId: 0, collegeId: 0 });
+        handler(req, res, { userId: 0, collegeId: 0 });
       }
     } catch (error) {
       console.log(error);
