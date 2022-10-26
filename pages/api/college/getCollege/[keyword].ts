@@ -33,6 +33,7 @@ async function handler(
         },
       ],
     },
+    take: 30,
   });
 
   return res.json({

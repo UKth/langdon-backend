@@ -4,6 +4,9 @@ export const ACCESS_TOKEN_EXPIRATION = 1 * 60 * min_ts;
 export const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * min_ts; // 30days
 export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
 
+export const MIN_TITLE_LENGTH = 3;
+export const MIN_CONTENT_LENGTH = 3;
+
 export const errorMessages = {
   user: {
     emailNotRecieved: "Email is required.",
@@ -34,6 +37,14 @@ export const errorMessages = {
   class: {
     noFriendWithTarget: "You can only get your friend's classes.",
   },
+  post: {
+    boardIdRequired: "Board id is required.",
+    getPostInvalidBoard: "You can't get posts of the board.",
+    paramsNotEnough: "All field is required.",
+    postNotCreated: "Post not created. Please try again.",
+    postNotFound: "Post not found. Please try again.",
+  },
+  idRequired: "Id required.",
 };
 
 export const EXAMDATE_OFFSET = 1670750000000; // why??

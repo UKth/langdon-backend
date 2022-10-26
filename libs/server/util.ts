@@ -16,6 +16,15 @@ export const isFriend = async (userId: number, targetId: number) => {
         },
       ],
     },
+    take: 1,
   });
   return !!friend.length;
+};
+
+export const validBoard = async (collegeId: number, boardId: number) => {
+  const board = await client.board.findUnique({
+    where: { id: boardId },
+  });
+
+  return board?.collegeId === collegeId;
 };

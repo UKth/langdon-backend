@@ -17,6 +17,7 @@ model College {
   activated  Boolean  @default(false)
   User       User[]
   Course     Course[]
+  Board      Board[]
 }
 
 model User {
@@ -35,6 +36,8 @@ model User {
   Board             Board[]
   Post              Post[]
   Comment           Comment[]
+  likedPost         Post[]    @relation("like_post")
+  likedComment      Comment[] @relation("like_comment")
 }
 
 model FriendRequest {
@@ -155,9 +158,11 @@ model Board {
   id        Int       @id @default(autoincrement())
   title     String
   type      BoardType
+  college   College   @relation(fields: [collegeId], references: [id])
+  collegeId Int
   Post      Post[]
   createdBy User?     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    Int?
   createdAt DateTime  @default(now())
 }
 
@@ -167,26 +172,32 @@ enum BoardType {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  board     Board    @relation(fields: [boardId], references: [id])
-  boardId   Int
-  title     String
-  content   String
-  createdBy User     @relation(fields: [userId], references: [id])
-  userId    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int       @id @default(autoincrement())
+  board      Board     @relation(fields: [boardId], references: [id])
+  boardId    Int
+  title      String
+  content    String
+  createdBy  User      @relation(fields: [userId], references: [id])
+  userId     Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  likedUsers User[]    @relation("like_post")
+  comments   Comment[]
 
+  @@index([boardId])
   @@index([userId])
 }
 
 model Comment {
   id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
   content   String
   createdBy User     @relation(fields: [userId], references: [id])
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  likedUser User[]   @relation("like_comment")
+  postId    Int
 
   @@index([userId])
 }

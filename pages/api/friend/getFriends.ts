@@ -28,10 +28,11 @@ async function handler(
       user: true,
       friend: true,
     },
+    take: 100,
   });
 
   const friendList = friends.map((friend) =>
-    friend.userId == userId ? friend.friend : friend.user
+    friend.userId === userId ? friend.friend : friend.user
   );
 
   return res.json({

@@ -18,8 +18,7 @@ async function handler(
   } = req;
 
   if (!id || Array.isArray(id)) {
-    return res.status(400);
-    // no message
+    return res.status(400).json({ ok: false, error: errorMessages.idRequired });
   }
 
   const college = await client.college.findUnique({
