@@ -22,9 +22,9 @@ export const errorMessages = {
     invalidToken: "Invalid token.",
     tokenNotMatched: "Invalid token for user.",
     tokenExpired: "Token Expired.",
-    classNotFound: "Class not found.",
-    invalidClass: "Invalid class.",
-    notEnrolledClass: "The user didn't enrolled the class.",
+  },
+  course: {
+    alreadyEnrolledClass: "You can't enroll two section of one class.",
   },
   friend: {
     addNoTargetId: "Target value is required.",
@@ -33,9 +33,12 @@ export const errorMessages = {
     addUserSelf: "You can't be a friend with yourself.",
     collegeNotMatched: "You can only be a friend with same college's user.",
     invalidRequest: "The link is invalid. Please try again.",
+    noFriendWithTarget: "You can only get your friend's classes.",
   },
   class: {
-    noFriendWithTarget: "You can only get your friend's classes.",
+    classNotFound: "Class not found.",
+    invalidClass: "Invalid class.",
+    notEnrolledClass: "The user didn't enrolled the class.",
   },
   post: {
     boardIdRequired: "Board id is required.",

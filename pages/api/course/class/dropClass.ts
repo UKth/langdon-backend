@@ -50,7 +50,7 @@ async function handler(
   if (!includeClass(tokenUser.enrolledClasses, classId)) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.user.notEnrolledClass,
+      error: errorMessages.class.notEnrolledClass,
     });
   }
 

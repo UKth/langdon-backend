@@ -4,6 +4,16 @@ import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { Course } from "@prisma/client";
+
+const includeCourse = (courses: Course[], id: number) => {
+  for (let i = 0; i < courses.length; i++) {
+    if (courses[i].id === id) {
+      return true;
+    }
+  }
+  return false;
+};
 
 async function handler(
   req: NextApiRequest,
@@ -28,21 +38,31 @@ async function handler(
       course: true,
     },
   });
+
   if (!cls) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.user.classNotFound,
+      error: errorMessages.class.classNotFound,
     });
   }
+
   if (cls.course.collegeId !== collegeId) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.user.invalidClass,
+      error: errorMessages.class.invalidClass,
     });
   }
+
   const tokenUser = await client.user.findUnique({
     where: {
       id: userId,
+    },
+    include: {
+      enrolledClasses: {
+        include: {
+          course: true,
+        },
+      },
     },
   });
 
@@ -50,6 +70,18 @@ async function handler(
     return res.status(400).json({
       ok: false,
       error: errorMessages.user.userNotFound,
+    });
+  }
+
+  if (
+    includeCourse(
+      tokenUser.enrolledClasses.map((enrolledClass) => enrolledClass.course),
+      cls.courseId
+    )
+  ) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.course.alreadyEnrolledClass,
     });
   }
 
