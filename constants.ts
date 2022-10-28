@@ -44,6 +44,10 @@ export const errorMessages = {
     postNotCreated: "Post not created. Please try again.",
     postNotFound: "Post not found. Please try again.",
   },
+  comment: {
+    invalidPost: "You can't write a comment in the post.",
+    commentNotCreated: "Comment not created. Please try again.",
+  },
   idRequired: "Id required.",
 };
 

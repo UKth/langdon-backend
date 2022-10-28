@@ -28,3 +28,18 @@ export const validBoard = async (collegeId: number, boardId: number) => {
 
   return board?.collegeId === collegeId;
 };
+
+export const validPost = async (collegeId: number, postId: number) => {
+  const post = await client.post.findUnique({
+    where: { id: postId },
+    include: {
+      board: {
+        select: {
+          collegeId: true,
+        },
+      },
+    },
+  });
+
+  return post?.board?.collegeId === collegeId;
+};
