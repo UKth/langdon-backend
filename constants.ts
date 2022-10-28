@@ -52,6 +52,7 @@ export const errorMessages = {
     commentNotCreated: "Comment not created. Please try again.",
   },
   idRequired: "Id required.",
+  loginRequired: "Login required.",
 };
 
 export const EXAMDATE_OFFSET = 1670750000000; // why??
