@@ -23,7 +23,7 @@ async function handler(
   if (targetId && !(await isFriend(userId, targetId))) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.class.noFriendWithTarget,
+      error: errorMessages.friend.noFriendWithTarget,
     });
   }
 
