@@ -2,7 +2,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
-import { ACCESS_TOKEN_EXPIRATION, errorMessages } from "@constants";
+import {
+  ACCESS_TOKEN_EXPIRATION,
+  errorMessages,
+  REFRESH_TOKEN_EXPIRATION,
+  REFRESH_TOKEN_RENEWAL,
+} from "@constants";
 import jwt from "jsonwebtoken";
 import withHandler, { TokenInterface } from "@libs/server/withHandler";
 
@@ -40,6 +45,18 @@ async function handler(
       });
     }
 
+    let newRefreshToken;
+    if (expiration.valueOf() - new Date().valueOf() < REFRESH_TOKEN_RENEWAL) {
+      newRefreshToken = jwt.sign(
+        {
+          id: userId,
+          collegeId,
+          expiration: Date.now() + REFRESH_TOKEN_EXPIRATION,
+        },
+        process.env.SECRET_KEY || ""
+      );
+    }
+
     const accessToken = jwt.sign(
       {
         id: userId,
@@ -52,6 +69,7 @@ async function handler(
     return res.json({
       ok: true,
       accessToken,
+      ...(refreshToken ? { refreshToken: newRefreshToken } : {}),
     });
   } catch (error) {
     console.log(error);
