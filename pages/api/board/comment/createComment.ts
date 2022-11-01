@@ -1,12 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType, validBoard, validPost } from "@libs/server/util";
+import { ResponseType, validPost } from "@libs/server/util";
 
-import {
-  errorMessages,
-  MIN_CONTENT_LENGTH,
-  MIN_TITLE_LENGTH,
-} from "@constants";
+import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
 
 async function handler(
