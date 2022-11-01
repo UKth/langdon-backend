@@ -5,7 +5,7 @@ import { ResponseType } from "@libs/server/util";
 import { errorMessages } from "@constants";
 import jwt from "jsonwebtoken";
 
-interface TokenInterface {
+export interface TokenInterface {
   id: number;
   collegeId: number;
   expiration: Date;
@@ -60,7 +60,7 @@ export default function withHandler({
         if (expiration < new Date()) {
           return res.status(400).json({
             ok: false,
-            error: errorMessages.user.tokenExpired,
+            error: errorMessages.token.tokenExpired,
             tokenExpired: true, // temporary
           });
         }

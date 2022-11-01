@@ -27,7 +27,7 @@ async function handler(
   if (!userId) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.user.tokenNotMatched,
+      error: errorMessages.token.tokenNotMatched,
     });
   }
 

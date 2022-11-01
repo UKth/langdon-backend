@@ -19,9 +19,13 @@ export const errorMessages = {
     createUserFailed: "Can't register user. Please try again.",
     userNotFound: "Can't find user",
     userAlreadyExistForEmail: "User already exist. Please try again.",
+  },
+  token: {
     invalidToken: "Invalid token.",
     tokenNotMatched: "Invalid token for user.",
     tokenExpired: "Token Expired.",
+    refreshTokenRequired: "Refresh token is required.",
+    refreshTokenExpired: "Refresh token Expired. Please login again.",
   },
   course: {
     alreadyEnrolledClass: "You can't enroll two section of one class.",
