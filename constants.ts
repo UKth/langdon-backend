@@ -1,11 +1,8 @@
 const min_ts = 60 * 1000;
 export const VERIFICATION_CODE_EXPIRATION = 3 * min_ts;
-// export const ACCESS_TOKEN_EXPIRATION = 1 * 60 * min_ts;
-// export const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * min_ts; // 30days
-// export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
-export const ACCESS_TOKEN_EXPIRATION = 1 * min_ts;
-export const REFRESH_TOKEN_EXPIRATION = 5 * min_ts; // 30days
-export const REFRESH_TOKEN_RENEWAL = 1 * min_ts; // 10days
+export const ACCESS_TOKEN_EXPIRATION = 1 * 60 * min_ts;
+export const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * min_ts; // 30days
+export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
 
 export const MIN_TITLE_LENGTH = 3;
 export const MIN_CONTENT_LENGTH = 3;
