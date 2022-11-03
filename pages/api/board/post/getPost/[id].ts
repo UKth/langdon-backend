@@ -35,7 +35,11 @@ async function handler(
         },
       },
       createdBy: true,
-      comments: true,
+      comments: {
+        include: {
+          createdBy: true,
+        },
+      },
       _count: {
         select: {
           likedUsers: true,
