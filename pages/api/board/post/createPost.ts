@@ -24,10 +24,12 @@ async function handler(
     boardId,
     title,
     content,
+    isAnonymous = true,
   }: {
     boardId?: number;
     title?: string;
     content?: string;
+    isAnonymous?: boolean;
   } = req.body;
 
   if (!boardId || !title?.length || !content?.length) {
@@ -51,6 +53,7 @@ async function handler(
       },
       title,
       content,
+      isAnonymous,
       board: {
         connect: {
           id: boardId,

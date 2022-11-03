@@ -19,9 +19,11 @@ async function handler(
   const {
     postId,
     content,
+    isAnonymous = true,
   }: {
     postId?: number;
     content?: string;
+    isAnonymous?: boolean;
   } = req.body;
 
   if (!postId || !content?.length) {
@@ -44,6 +46,7 @@ async function handler(
         },
       },
       content,
+      isAnonymous,
       post: {
         connect: {
           id: postId,
