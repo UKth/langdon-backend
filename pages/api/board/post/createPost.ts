@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType, validBoard } from "@libs/server/util";
+import { ResponseType } from "@libs/server/util";
 
 import {
   errorMessages,
