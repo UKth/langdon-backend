@@ -57,7 +57,16 @@ async function handler(
 
   return res.json({
     ok: true,
-    post,
+    post: {
+      ...post,
+      ...(post.isAnonymous
+        ? {
+            createdBy: {
+              id: post.createdBy.id,
+            },
+          }
+        : {}),
+    },
   });
 }
 
