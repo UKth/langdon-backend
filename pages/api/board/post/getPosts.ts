@@ -22,11 +22,11 @@ async function handler(
     boardId?: number;
   } = req.body;
 
-  if (!boardId || !validBoard(collegeId, boardId)) {
-    return res
-      .status(400)
-      .json({ ok: false, error: errorMessages.post.getPostInvalidBoard });
-  }
+  // if (!boardId || !validBoard(collegeId, boardId)) {
+  //   return res
+  //     .status(400)
+  //     .json({ ok: false, error: errorMessages.post.getPostInvalidBoard });
+  // }
 
   const posts = await client.post.findMany({
     where: {
