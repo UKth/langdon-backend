@@ -53,8 +53,8 @@ model Friend {
   id        Int      @id @default(autoincrement())
   userId    Int
   friendId  Int
-  user      User     @relation(name: "users", fields: [userId], references: [id])
-  friend    User     @relation(name: "friend_users", fields: [friendId], references: [id])
+  user      User     @relation(name: "users", fields: [userId], references: [id], onDelete: Cascade)
+  friend    User     @relation(name: "friend_users", fields: [friendId], references: [id], onDelete: Cascade)
   status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,7 +76,7 @@ model VerificationCode {
 
 model Course {
   id                              Int     @id @default(autoincrement())
-  college                         College @relation(fields: [collegeId], references: [id])
+  college                         College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   courseId                        String // 000441
   termCode                        Int //1232
   subjectCode                     Int //112
@@ -93,7 +93,7 @@ model Course {
 
 model Class {
   id            Int       @id @default(autoincrement())
-  course        Course    @relation(fields: [courseId], references: [id])
+  course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId      Int
   sections      Section[] // probably 1~2
   enrolledUsers User[]
@@ -104,7 +104,7 @@ model Class {
 // per class type
 model Section {
   id            Int            @id @default(autoincrement())
-  class         Class          @relation(fields: [classId], references: [id])
+  class         Class          @relation(fields: [classId], references: [id], onDelete: Cascade)
   type          String? // "LEC", "DIS"
   sectionNumber String? // 001, 301
   classId       Int
@@ -117,7 +117,7 @@ model Section {
 
 model ClassMeeting {
   id                  Int       @id @default(autoincrement())
-  section             Section   @relation(fields: [sectionId], references: [id])
+  section             Section   @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   meetingOrExamNumber String
   meetingType         String
   meetingTimeStart    Int?
@@ -158,7 +158,7 @@ model Board {
   id        Int       @id @default(autoincrement())
   title     String
   type      BoardType
-  college   College   @relation(fields: [collegeId], references: [id])
+  college   College   @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   collegeId Int
   Post      Post[]
   createdBy User?     @relation(fields: [userId], references: [id])
@@ -173,11 +173,11 @@ enum BoardType {
 
 model Post {
   id          Int       @id @default(autoincrement())
-  board       Board     @relation(fields: [boardId], references: [id])
+  board       Board     @relation(fields: [boardId], references: [id], onDelete: Cascade)
   boardId     Int
   title       String
   content     String
-  createdBy   User      @relation(fields: [userId], references: [id])
+  createdBy   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -191,9 +191,9 @@ model Post {
 
 model Comment {
   id          Int      @id @default(autoincrement())
-  post        Post     @relation(fields: [postId], references: [id])
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   content     String
-  createdBy   User     @relation(fields: [userId], references: [id])
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

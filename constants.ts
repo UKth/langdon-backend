@@ -50,6 +50,8 @@ export const errorMessages = {
     paramsNotEnough: "All field is required.",
     postNotCreated: "Post not created. Please try again.",
     postNotFound: "Post not found. Please try again.",
+    deleteOthersPost: "You can only delete your post.",
+    postNotDeleted: "Post not deleted. Please try again.",
   },
   comment: {
     invalidPost: "You can't write a comment in the post.",
