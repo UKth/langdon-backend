@@ -172,32 +172,34 @@ enum BoardType {
 }
 
 model Post {
-  id         Int       @id @default(autoincrement())
-  board      Board     @relation(fields: [boardId], references: [id])
-  boardId    Int
-  title      String
-  content    String
-  createdBy  User      @relation(fields: [userId], references: [id])
-  userId     Int
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  likedUsers User[]    @relation("like_post")
-  comments   Comment[]
+  id          Int       @id @default(autoincrement())
+  board       Board     @relation(fields: [boardId], references: [id])
+  boardId     Int
+  title       String
+  content     String
+  createdBy   User      @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  likedUsers  User[]    @relation("like_post")
+  comments    Comment[]
+  isAnonymous Boolean   @default(true)
 
   @@index([boardId])
   @@index([userId])
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
-  post       Post     @relation(fields: [postId], references: [id])
-  content    String
-  createdBy  User     @relation(fields: [userId], references: [id])
-  userId     Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  likedUsers User[]   @relation("like_comment")
-  postId     Int
+  id          Int      @id @default(autoincrement())
+  post        Post     @relation(fields: [postId], references: [id])
+  content     String
+  createdBy   User     @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  likedUsers  User[]   @relation("like_comment")
+  postId      Int
+  isAnonymous Boolean  @default(true)
 
   @@index([userId])
 }
