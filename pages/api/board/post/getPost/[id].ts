@@ -34,6 +34,7 @@ async function handler(
           collegeId: true,
         },
       },
+      createdBy: true,
       comments: true,
       _count: {
         select: {
