@@ -38,11 +38,11 @@ async function handler(
       .json({ ok: false, error: errorMessages.post.paramsNotEnough });
   }
 
-  if (!boardId || !validBoard(collegeId, boardId)) {
-    return res
-      .status(400)
-      .json({ ok: false, error: errorMessages.post.getPostInvalidBoard });
-  }
+  // if (!boardId || !validBoard(collegeId, boardId)) {
+  //   return res
+  //     .status(400)
+  //     .json({ ok: false, error: errorMessages.post.getPostInvalidBoard });
+  // }
 
   const post = await client.post.create({
     data: {
