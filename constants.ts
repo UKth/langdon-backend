@@ -52,6 +52,8 @@ export const errorMessages = {
     postNotFound: "Post not found. Please try again.",
     deleteOthersPost: "You can only delete your post.",
     postNotDeleted: "Post not deleted. Please try again.",
+    updateOthersPost: "You can only update your post.",
+    postNotUpdated: "Post not updated. Please try again.",
   },
   comment: {
     invalidPost: "You can't write a comment in the post.",
