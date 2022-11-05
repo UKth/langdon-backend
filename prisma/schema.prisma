@@ -38,6 +38,7 @@ model User {
   Comment           Comment[]
   likedPost         Post[]    @relation("like_post")
   likedComment      Comment[] @relation("like_comment")
+  Report            Report[]
 }
 
 model FriendRequest {
@@ -202,4 +203,17 @@ model Comment {
   isAnonymous Boolean  @default(true)
 
   @@index([userId])
+}
+
+model Report {
+  id      Int    @id @default(autoincrement())
+  user    User   @relation(fields: [userId], references: [id])
+  content String
+  userId  Int
+}
+
+model CollegeRequest {
+  id          Int    @id @default(autoincrement())
+  email       String
+  emailFooter String
 }
