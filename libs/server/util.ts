@@ -43,3 +43,14 @@ export const validPost = async (collegeId: number, postId: number) => {
 
   return post?.board?.collegeId === collegeId;
 };
+
+export function handleDates(body: any) {
+  if (body === null || body === undefined || typeof body !== "object")
+    return body;
+
+  for (const key of Object.keys(body)) {
+    const value = body[key];
+    if (value instanceof Date) body[key] = value.valueOf();
+    else if (typeof value === "object") handleDates(value);
+  }
+}
