@@ -53,4 +53,5 @@ export function handleDates(body: any) {
     if (value instanceof Date) body[key] = value.valueOf();
     else if (typeof value === "object") handleDates(value);
   }
+  return body;
 }
