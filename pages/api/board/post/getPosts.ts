@@ -39,6 +39,12 @@ async function handler(
           comments: true,
         },
       },
+      createdBy: {
+        select: {
+          id: true,
+          netId: true,
+        },
+      },
     },
     orderBy: {
       id: "asc",
