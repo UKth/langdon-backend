@@ -18,6 +18,7 @@ model College {
   User       User[]
   Course     Course[]
   Board      Board[]
+  Table      Table[]
 }
 
 model User {
@@ -28,7 +29,6 @@ model User {
   firstName         String
   lastName          String
   collegeId         Int
-  enrolledClasses   Class[]
   userFriends       Friend[]  @relation(name: "users")
   friendUserFriends Friend[]  @relation(name: "friend_users")
   createdAt         DateTime  @default(now())
@@ -39,6 +39,20 @@ model User {
   likedPost         Post[]    @relation("like_post")
   likedComment      Comment[] @relation("like_comment")
   Report            Report[]
+  tables            Table[]
+  defaultTable      Table     @relation("default_table", fields: [defaultTableId], references: [id])
+  defaultTableId    Int       @unique
+}
+
+model Table {
+  id              Int     @id @default(autoincrement())
+  user            User?   @relation(fields: [userId], references: [id])
+  college         College @relation(fields: [collegeId], references: [id])
+  termCode        Int
+  enrolledClasses Class[]
+  collegeId       Int
+  userId          Int?
+  defaultUser     User?   @relation("default_table")
 }
 
 model FriendRequest {
@@ -97,7 +111,7 @@ model Class {
   course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId      Int
   sections      Section[] // probably 1~2
-  enrolledUsers User[]
+  enrolledTable Table[]
 
   @@index([courseId])
 }

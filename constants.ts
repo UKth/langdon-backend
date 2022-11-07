@@ -20,6 +20,10 @@ export const errorMessages = {
     userNotFound: "Can't find user",
     userAlreadyExistForEmail: "User already exist. Please try again.",
   },
+  table: {
+    defaultTableNotFound: "Can't find table of the user.",
+    tableNotFound: "Can't find the table.",
+  },
   token: {
     invalidToken: "Invalid token.",
     tokenNotMatched: "Invalid token for user.",
@@ -28,7 +32,7 @@ export const errorMessages = {
     refreshTokenExpired: "Refresh token Expired. Please login again.",
   },
   course: {
-    alreadyEnrolledClass: "You can't enroll two section of one class.",
+    alreadyEnrolledCoure: "You can't enroll two section of one class.",
   },
   friend: {
     addNoTargetId: "Target value is required.",
@@ -43,6 +47,8 @@ export const errorMessages = {
     classNotFound: "Class not found.",
     invalidClass: "Invalid class.",
     notEnrolledClass: "The user didn't enrolled the class.",
+    enrollFailed: "Enroll failed. Please try again.",
+    dropFailed: "Drop failed. Please try again.",
   },
   post: {
     boardIdRequired: "Board id is required.",

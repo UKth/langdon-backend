@@ -27,9 +27,11 @@ async function handler(
     });
   }
 
-  const tokenUser = await client.user.findUnique({
+  const userDefaultTable = await client.table.findFirst({
     where: {
-      id: targetId ?? userId,
+      defaultUser: {
+        id: userId,
+      },
     },
     include: {
       enrolledClasses: {
@@ -50,16 +52,16 @@ async function handler(
     },
   });
 
-  if (!tokenUser) {
+  if (!userDefaultTable) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.user.userNotFound,
+      error: errorMessages.table.defaultTableNotFound,
     });
   }
 
   return res.json({
     ok: true,
-    enrolledClasses: tokenUser.enrolledClasses,
+    enrolledClasses: userDefaultTable.enrolledClasses,
   });
 }
 

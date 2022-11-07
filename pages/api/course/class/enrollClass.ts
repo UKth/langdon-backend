@@ -28,8 +28,10 @@ async function handler(
 ) {
   const {
     classId,
+    tableId: t_id,
   }: {
     classId: number;
+    tableId?: number;
   } = req.body;
 
   const cls = await client.class.findUnique({
@@ -57,13 +59,6 @@ async function handler(
     where: {
       id: userId,
     },
-    include: {
-      enrolledClasses: {
-        include: {
-          course: true,
-        },
-      },
-    },
   });
 
   if (!tokenUser) {
@@ -73,21 +68,44 @@ async function handler(
     });
   }
 
+  const tableId = t_id ?? tokenUser.defaultTableId;
+
+  const table = await client.table.findFirst({
+    where: {
+      id: tableId,
+      userId,
+    },
+    include: {
+      enrolledClasses: {
+        include: {
+          course: true,
+        },
+      },
+    },
+  });
+
+  if (!table) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.table.tableNotFound,
+    });
+  }
+
   if (
     includeCourse(
-      tokenUser.enrolledClasses.map((enrolledClass) => enrolledClass.course),
+      table.enrolledClasses.map((enrolledClass) => enrolledClass.course),
       cls.courseId
     )
   ) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.course.alreadyEnrolledClass,
+      error: errorMessages.course.alreadyEnrolledCoure,
     });
   }
 
-  const updatedUser = await client.user.update({
+  const updatedTable = await client.table.update({
     where: {
-      id: tokenUser.id,
+      id: table.id,
     },
     data: {
       enrolledClasses: {
@@ -100,7 +118,14 @@ async function handler(
       enrolledClasses: true,
     },
   });
-  console.log(updatedUser);
+
+  if (!updatedTable) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.class.enrollFailed,
+    });
+  }
+
   return res.json({
     ok: true,
   });

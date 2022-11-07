@@ -116,6 +116,16 @@ async function handler(
             id: college.id,
           },
         },
+        defaultTable: {
+          create: {
+            college: {
+              connect: {
+                id: college.id,
+              },
+            },
+            termCode: 1232,
+          },
+        },
       },
       include: {
         college: true,
