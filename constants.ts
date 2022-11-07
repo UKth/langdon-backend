@@ -58,6 +58,7 @@ export const errorMessages = {
   comment: {
     invalidPost: "You can't write a comment in the post.",
     commentNotCreated: "Comment not created. Please try again.",
+    deleteOthersComment: "You can only delete your comment.",
   },
   report: {
     invalidCreateReportParams: "Target, type is required",
