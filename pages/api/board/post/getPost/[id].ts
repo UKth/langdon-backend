@@ -39,6 +39,9 @@ async function handler(
         include: {
           createdBy: true,
         },
+        orderBy: {
+          id: "desc",
+        },
       },
       _count: {
         select: {
