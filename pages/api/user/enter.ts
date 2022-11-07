@@ -111,6 +111,7 @@ async function handler(
         netId: email.split("@")[0],
         firstName,
         lastName,
+        pushToken: "tmp",
         college: {
           connect: {
             id: college.id,
@@ -137,6 +138,30 @@ async function handler(
     return res
       .status(400)
       .json({ ok: false, error: errorMessages.user.createUserFailed });
+  }
+
+  const updatedTable = await client.table.update({
+    where: {
+      id: user.defaultTableId,
+    },
+    data: {
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+  });
+
+  if (!updatedTable) {
+    await client.user.delete({
+      where: {
+        id: user.id,
+      },
+    });
+    return res
+      .status(400)
+      .json({ ok: false, error: errorMessages.table.connectUserFailed });
   }
 
   const accessToken = jwt.sign(

@@ -23,6 +23,8 @@ export const errorMessages = {
   table: {
     defaultTableNotFound: "Can't find table of the user.",
     tableNotFound: "Can't find the table.",
+    connectUserFailed:
+      "Failed to generating table. Please contact to support address.",
   },
   token: {
     invalidToken: "Invalid token.",
