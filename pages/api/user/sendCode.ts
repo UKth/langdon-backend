@@ -79,6 +79,12 @@ async function handler(
     }
   }
 
+  if (email === "tester123@wisc.edu") {
+    res.send({
+      ok: true,
+    });
+  }
+
   let transporter: Transporter = nodemailer.createTransport({
     /* Gmail Host */
     host: "smtp.gmail.com",
