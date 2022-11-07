@@ -20,7 +20,6 @@ async function handler(
     targetType,
   }: {
     content: string;
-    userId: number;
     targetId: number;
     targetType: ReportTargetType;
   } = req.body;
