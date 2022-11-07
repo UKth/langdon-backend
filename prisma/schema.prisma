@@ -206,10 +206,18 @@ model Comment {
 }
 
 model Report {
-  id      Int    @id @default(autoincrement())
-  user    User   @relation(fields: [userId], references: [id])
-  content String
-  userId  Int
+  id         Int              @id @default(autoincrement())
+  user       User             @relation(fields: [userId], references: [id])
+  content    String
+  userId     Int
+  targetId   Int
+  targetType ReportTargetType
+}
+
+enum ReportTargetType {
+  post
+  user
+  comment
 }
 
 model CollegeRequest {
