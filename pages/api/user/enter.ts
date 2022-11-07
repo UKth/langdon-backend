@@ -21,12 +21,14 @@ async function handler(
     lastName,
     code,
     userId,
+    pushToken,
   }: {
     email: string;
     code: number;
     firstName?: string;
     lastName?: string;
     userId?: number;
+    pushToken?: string;
   } = req.body;
 
   const college = await client.college.findUnique({
@@ -111,7 +113,7 @@ async function handler(
         netId: email.split("@")[0],
         firstName,
         lastName,
-        pushToken: "tmp",
+        pushToken: pushToken ?? "tmp",
         college: {
           connect: {
             id: college.id,
