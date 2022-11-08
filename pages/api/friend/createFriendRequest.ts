@@ -16,56 +16,10 @@ async function handler(
     collegeId: number;
   }
 ) {
-  const {
-    targetId,
-  }: {
-    targetId: number;
-  } = req.body;
-
   if (!userId) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.token.tokenNotMatched,
-    });
-  }
-
-  if (!targetId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.friend.addNoTargetId,
-    });
-  }
-
-  if (userId === targetId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.friend.addUserSelf,
-    });
-  }
-
-  const targetUser = await client.user.findUnique({
-    where: {
-      id: targetId,
-    },
-  });
-  if (!targetUser) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.userNotFound,
-    });
-  }
-
-  if (targetUser.collegeId !== collegeId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.friend.collegeNotMatched,
-    });
-  }
-
-  if (await isFriend(userId, targetId)) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.friend.alreadyFriend,
     });
   }
 
@@ -74,7 +28,6 @@ async function handler(
   const friendRequest = await client.friendRequest.create({
     data: {
       createrId: userId,
-      targetId,
       code,
     },
   });
@@ -82,7 +35,7 @@ async function handler(
   if (!friendRequest) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.friend.addFriendFailed,
+      error: errorMessages.friend.createFriendRequestFailed,
     });
   }
 
