@@ -21,7 +21,7 @@ async function handler(
     lastName,
     code,
     userId,
-    pushToken,
+    pushToken: p_token,
   }: {
     email: string;
     code: number;
@@ -32,6 +32,7 @@ async function handler(
   } = req.body;
 
   const isTester = email === "tester123@wisc.edu";
+  const pushToken = p_token ?? "";
 
   const college = await client.college.findUnique({
     where: {
@@ -89,6 +90,15 @@ async function handler(
         .status(400)
         .json({ ok: false, error: errorMessages.user.userNotFound });
     }
+
+    await client.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        pushToken,
+      },
+    });
   } else {
     if (!firstName || !lastName) {
       return res
@@ -115,7 +125,7 @@ async function handler(
         netId: email.split("@")[0],
         firstName,
         lastName,
-        pushToken: pushToken ?? "tmp",
+        pushToken,
         college: {
           connect: {
             id: college.id,
