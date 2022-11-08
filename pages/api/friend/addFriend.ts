@@ -73,10 +73,7 @@ async function handler(
 
   const friendRequest = await client.friendRequest.findUnique({
     where: {
-      createrId_targetId: {
-        createrId: targetId,
-        targetId: userId,
-      },
+      createrId: targetId,
     },
   });
 
@@ -91,12 +88,12 @@ async function handler(
     data: {
       user: {
         connect: {
-          id: userId,
+          id: targetId,
         },
       },
       friend: {
         connect: {
-          id: targetId,
+          id: userId,
         },
       },
     },
@@ -111,10 +108,7 @@ async function handler(
 
   await client.friendRequest.delete({
     where: {
-      createrId_targetId: {
-        createrId: targetId,
-        targetId: userId,
-      },
+      createrId: targetId,
     },
   });
 

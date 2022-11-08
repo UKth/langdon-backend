@@ -59,10 +59,9 @@ model Table {
 model FriendRequest {
   id        Int @id @default(autoincrement())
   createrId Int
-  targetId  Int
   code      Int
 
-  @@unique([createrId, targetId])
+  @@unique([createrId])
 }
 
 model Friend {
