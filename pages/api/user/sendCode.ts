@@ -82,6 +82,13 @@ async function handler(
   if (email === "tester123@wisc.edu") {
     res.send({
       ok: true,
+      ...(user
+        ? {
+            user: {
+              id: user.id,
+            },
+          }
+        : {}),
     });
   }
 
