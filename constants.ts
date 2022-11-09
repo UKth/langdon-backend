@@ -80,3 +80,5 @@ export const errorMessages = {
 };
 
 export const EXAMDATE_OFFSET = 1670750000000; // why??
+
+export const EXPO_PUSH_API_URL = "https://exp.host/--/api/v2/push/send";

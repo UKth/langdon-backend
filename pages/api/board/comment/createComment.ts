@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType, validPost } from "@libs/server/util";
+import { ResponseType, sendOnePush, validPost } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -32,7 +32,9 @@ async function handler(
       .json({ ok: false, error: errorMessages.post.paramsNotEnough });
   }
 
-  if (!postId || !validPost(collegeId, postId)) {
+  const post = await validPost(collegeId, postId);
+
+  if (!postId || !post) {
     return res
       .status(400)
       .json({ ok: false, error: errorMessages.comment.invalidPost });
@@ -61,6 +63,16 @@ async function handler(
       error: errorMessages.comment.commentNotCreated,
     });
   }
+
+  sendOnePush(post.createdBy.pushToken, {
+    body: "Someone create comment on your post.",
+    data: {
+      route: "Post",
+      params: {
+        id: post.id,
+      },
+    },
+  });
 
   return res.json({
     ok: true,

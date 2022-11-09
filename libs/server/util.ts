@@ -1,4 +1,5 @@
 import client from "@libs/server/client";
+
 export interface ResponseType {
   ok: boolean;
   [key: string]: any;
@@ -38,13 +39,18 @@ export const validPost = async (collegeId: number, postId: number) => {
           collegeId: true,
         },
       },
+      createdBy: {
+        select: {
+          pushToken: true,
+        },
+      },
     },
   });
 
-  return post?.board?.collegeId === collegeId;
+  return post?.board?.collegeId === collegeId ? post : null;
 };
 
-export function handleDates(body: any) {
+export const handleDates = (body: any) => {
   if (body === null || body === undefined || typeof body !== "object")
     return body;
 
@@ -54,4 +60,39 @@ export function handleDates(body: any) {
     else if (typeof value === "object") handleDates(value);
   }
   return body;
-}
+};
+
+export type contentType = {
+  body: string;
+  badge?: number;
+  title?: string;
+  subtitle?: string;
+  data?: any;
+};
+
+export const sendManyPush = (pushList: {
+  pushToken: string;
+  content: contentType;
+}) => {};
+
+export const sendOnePush = (pushToken: string, content: contentType) => {
+  // TODO
+  // let expo = new Expo();
+
+  const message = {
+    to: pushToken,
+    sound: "default",
+    title: "College Table",
+    ...content,
+  };
+
+  fetch("https://exp.host/--/api/v2/push/send", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Accept-encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(message),
+  });
+};
