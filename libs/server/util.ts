@@ -86,6 +86,8 @@ export const sendOnePush = (pushToken: string, content: contentType) => {
     ...content,
   };
 
+  console.log("body:", message);
+
   fetch("https://exp.host/--/api/v2/push/send", {
     method: "POST",
     headers: {
