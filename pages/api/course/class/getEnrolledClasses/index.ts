@@ -30,7 +30,7 @@ async function handler(
   const userDefaultTable = await client.table.findFirst({
     where: {
       defaultUser: {
-        id: userId,
+        id: targetId ?? userId,
       },
     },
     include: {

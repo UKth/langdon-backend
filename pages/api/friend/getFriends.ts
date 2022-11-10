@@ -37,7 +37,10 @@ async function handler(
 
   return res.json({
     ok: true,
-    friendsData: friendList,
+    friendsData: friendList.map((user) => ({
+      ...user,
+      pushToken: "",
+    })),
   });
 }
 
