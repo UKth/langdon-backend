@@ -19,7 +19,6 @@ export const isFriend = async (userId: number, targetId: number) => {
     },
     take: 1,
   });
-  console.log(userId, targetId, friend, !!friend.length);
   return !!friend.length;
 };
 
