@@ -9,7 +9,7 @@ const AddFriend: NextPage = () => {
   const { targetId, code } = router.query;
 
   useEffect(() => {
-    if (true || (targetId && code)) {
+    if (targetId && code) {
       document.location = `myapp://addFriends/${targetId}/${code}`;
     }
   }, [targetId, code]);
