@@ -8,8 +8,8 @@ const Share: NextPage = () => {
   const { route, params } = router.query;
 
   useEffect(() => {
-    if (true || (route && params)) {
-      document.location = `myapp://${route}/${params}`;
+    if (route && params) {
+      document.location = `collegetable://${route}/${params}`;
     }
   }, [route, params]);
 

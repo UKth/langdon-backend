@@ -7,10 +7,14 @@ import styles from "../styles/Home.module.css";
 const AddFriend: NextPage = () => {
   const router = useRouter();
   const { targetId, code } = router.query;
+  console.log("!!!aaa");
 
   useEffect(() => {
+    console.log("useEffedt!");
     if (targetId && code) {
-      document.location = `myapp://addFriends/${targetId}/${code}`;
+      console.log("hello");
+      document.location = `collegetable://addFriend/${targetId}/${code}`;
+      // document.location = `exp://10.140.208.89:19000/--/addFriend/${targetId}/${code}`;
     }
   }, [targetId, code]);
 
