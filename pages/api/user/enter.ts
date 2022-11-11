@@ -18,6 +18,7 @@ async function handler(
   const {
     email,
     firstName,
+    middleName,
     lastName,
     code,
     userId,
@@ -26,6 +27,7 @@ async function handler(
     email: string;
     code: number;
     firstName?: string;
+    middleName?: string;
     lastName?: string;
     userId?: number;
     pushToken?: string;
@@ -124,6 +126,7 @@ async function handler(
         email,
         netId: email.split("@")[0],
         firstName,
+        ...(middleName?.length ? { middleName } : {}),
         lastName,
         pushToken,
         college: {
