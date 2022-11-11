@@ -10,16 +10,16 @@ async function handler(
   res: NextApiResponse<ResponseType>,
   {
     collegeId,
-    lastId,
   }: {
     collegeId: number;
-    lastId?: number;
   }
 ) {
   const {
     boardId,
+    lastId,
   }: {
     boardId?: number;
+    lastId?: number;
   } = req.body;
 
   // if (!boardId || !validBoard(collegeId, boardId)) {

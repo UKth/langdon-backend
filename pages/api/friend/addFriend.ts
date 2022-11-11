@@ -9,15 +9,16 @@ import {
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
     collegeId,
   }: {
-    userId: number;
+    user: User;
     collegeId: number;
   }
 ) {
@@ -29,21 +30,6 @@ async function handler(
     code: number;
   } = req.body;
 
-  if (!userId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.token.tokenNotMatched,
-    });
-  }
-
-  const user = await client.user.findUnique({ where: { id: userId } });
-  if (!user) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.userNotFound,
-    });
-  }
-
   if (!targetId) {
     return res.status(400).json({
       ok: false,
@@ -51,7 +37,7 @@ async function handler(
     });
   }
 
-  if (userId === targetId) {
+  if (user.id === targetId) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.friend.addUserSelf,
@@ -77,7 +63,7 @@ async function handler(
     });
   }
 
-  if (await isFriend(userId, targetId)) {
+  if (await isFriend(user.id, targetId)) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.friend.alreadyFriend,
@@ -106,7 +92,7 @@ async function handler(
       },
       friend: {
         connect: {
-          id: userId,
+          id: user.id,
         },
       },
     },

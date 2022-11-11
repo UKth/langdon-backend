@@ -3,24 +3,25 @@ import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 
 import withHandler from "@libs/server/withHandler";
+import { User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
   }: {
-    userId: number;
+    user: User;
   }
 ) {
   const friends = await client.friend.findMany({
     where: {
       OR: [
         {
-          userId: userId,
+          userId: user.id,
         },
         {
-          friendId: userId,
+          friendId: user.id,
         },
       ],
     },
@@ -32,7 +33,7 @@ async function handler(
   });
 
   const friendList = friends.map((friend) =>
-    friend.userId === userId ? friend.friend : friend.user
+    friend.userId === user.id ? friend.friend : friend.user
   );
 
   return res.json({
@@ -40,7 +41,7 @@ async function handler(
     friendsData: friendList.map((user) => ({
       ...user,
       pushToken: "",
-    })),
+    })), // TODO
   });
 }
 

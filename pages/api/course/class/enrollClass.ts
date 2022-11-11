@@ -4,7 +4,7 @@ import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
-import { Course } from "@prisma/client";
+import { Course, User } from "@prisma/client";
 
 const includeCourse = (courses: Course[], id: number) => {
   for (let i = 0; i < courses.length; i++) {
@@ -19,10 +19,10 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
     collegeId,
   }: {
-    userId: number;
+    user: User;
     collegeId: number;
   }
 ) {
@@ -55,25 +55,12 @@ async function handler(
     });
   }
 
-  const tokenUser = await client.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!tokenUser) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.userNotFound,
-    });
-  }
-
-  const tableId = t_id ?? tokenUser.defaultTableId;
+  const tableId = t_id ?? user.defaultTableId;
 
   const table = await client.table.findFirst({
     where: {
       id: tableId,
-      userId,
+      userId: user.id,
     },
     include: {
       enrolledClasses: {

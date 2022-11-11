@@ -4,14 +4,15 @@ import { isFriend, ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
   }: {
-    userId: number;
+    user: User;
   }
 ) {
   const {
@@ -20,7 +21,7 @@ async function handler(
     targetId?: number;
   } = req.body;
 
-  if (targetId && !(await isFriend(userId, targetId))) {
+  if (targetId && !(await isFriend(user.id, targetId))) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.friend.noFriendWithTarget,
@@ -30,7 +31,7 @@ async function handler(
   const userDefaultTable = await client.table.findFirst({
     where: {
       defaultUser: {
-        id: targetId ?? userId,
+        id: targetId ?? user.id,
       },
     },
     include: {

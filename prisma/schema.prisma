@@ -25,29 +25,30 @@ model College {
 }
 
 model User {
-  id                Int       @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   netId             String
-  email             String    @unique
-  college           College   @relation(fields: [collegeId], references: [id])
+  email             String     @unique
+  college           College    @relation(fields: [collegeId], references: [id])
   firstName         String
   middleName        String?
   lastName          String
   collegeId         Int
-  userFriends       Friend[]  @relation(name: "users")
-  friendUserFriends Friend[]  @relation(name: "friend_users")
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  userFriends       Friend[]   @relation(name: "users")
+  friendUserFriends Friend[]   @relation(name: "friend_users")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
   Board             Board[]
   Post              Post[]
   Comment           Comment[]
-  likedPost         Post[]    @relation("like_post")
-  likedComment      Comment[] @relation("like_comment")
+  likedPost         Post[]     @relation("like_post")
+  likedComment      Comment[]  @relation("like_comment")
   Report            Report[]
   tables            Table[]
-  defaultTable      Table     @relation("default_table", fields: [defaultTableId], references: [id])
-  defaultTableId    Int       @unique
+  defaultTable      Table      @relation("default_table", fields: [defaultTableId], references: [id])
+  defaultTableId    Int        @unique
   pushToken         String
   Message           Message[]
+  chatrooms         Chatroom[]
 
   @@index([netId])
 }
@@ -210,7 +211,7 @@ model Post {
   likedUsers  User[]     @relation("like_post")
   comments    Comment[]
   isAnonymous Boolean    @default(true)
-  ChatRoom    ChatRoom[]
+  chatrooms   Chatroom[]
 
   @@index([boardId])
   @@index([userId])
@@ -232,22 +233,23 @@ model Comment {
   @@index([postId])
 }
 
-model ChatRoom {
+model Chatroom {
   id            Int       @id @default(autoincrement())
   post          Post?     @relation(fields: [postId], references: [id])
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
   postId        Int?
+  members       User[]
   messages      Message[]
   lastMessage   Message   @relation("last_message", fields: [lastMessageId], references: [id])
   lastMessageId Int       @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Message {
   id           Int       @id @default(autoincrement())
-  chatroom     ChatRoom? @relation(fields: [chatroomId], references: [id])
+  chatroom     Chatroom? @relation(fields: [chatroomId], references: [id])
   chatroomId   Int?
-  lastChatroom ChatRoom? @relation("last_message")
+  lastChatroom Chatroom? @relation("last_message")
   user         User      @relation(fields: [userId], references: [id])
   userId       Int
   content      String

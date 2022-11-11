@@ -10,10 +10,8 @@ async function handler(
   res: NextApiResponse<ResponseType>,
   {
     collegeId,
-    userId,
   }: {
     collegeId: number;
-    userId: number;
   }
 ) {
   const {

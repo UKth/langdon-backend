@@ -4,14 +4,15 @@ import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
   }: {
-    userId: number;
+    user: User;
   }
 ) {
   const {
@@ -26,7 +27,7 @@ async function handler(
     },
   });
 
-  if (post?.userId !== userId) {
+  if (post?.userId !== user.id) {
     return res
       .status(400)
       .json({ ok: false, error: errorMessages.post.deleteOthersPost });

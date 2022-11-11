@@ -4,15 +4,16 @@ import { ResponseType, sendOnePush, validPost } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
     collegeId,
   }: {
-    userId: number;
+    user: User;
     collegeId: number;
   }
 ) {
@@ -44,7 +45,7 @@ async function handler(
     data: {
       createdBy: {
         connect: {
-          id: userId,
+          id: user.id,
         },
       },
       content,

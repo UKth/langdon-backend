@@ -4,7 +4,7 @@ import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 
-import { Class } from "@prisma/client";
+import { Class, User } from "@prisma/client";
 import withHandler from "@libs/server/withHandler";
 
 const includeClass = (classes: Class[], id: number) => {
@@ -20,9 +20,9 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
   }: {
-    userId: number;
+    user: User;
   }
 ) {
   const {
@@ -33,25 +33,12 @@ async function handler(
     tableId?: number;
   } = req.body;
 
-  const tokenUser = await client.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!tokenUser) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.user.userNotFound,
-    });
-  }
-
-  const tableId = t_id ?? tokenUser.defaultTableId;
+  const tableId = t_id ?? user.defaultTableId;
 
   const table = await client.table.findFirst({
     where: {
       id: tableId,
-      userId,
+      userId: user.id,
     },
     include: {
       enrolledClasses: true,

@@ -4,36 +4,30 @@ import { isFriend, ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
     collegeId,
   }: {
-    userId: number;
+    user: User;
     collegeId: number;
   }
 ) {
-  if (!userId) {
-    return res.status(400).json({
-      ok: false,
-      error: errorMessages.token.tokenNotMatched,
-    });
-  }
-
   const code = Math.floor(100000 + Math.random() * 900000);
 
   const request = await client.friendRequest.findUnique({
     where: {
-      createrId: userId,
+      createrId: user.id,
     },
   });
   if (request) {
     const updateFriendRequest = await client.friendRequest.update({
       where: {
-        createrId: userId,
+        createrId: user.id,
       },
       data: {
         code,
@@ -49,7 +43,7 @@ async function handler(
   } else {
     const friendRequest = await client.friendRequest.create({
       data: {
-        createrId: userId,
+        createrId: user.id,
         code,
       },
     });

@@ -4,6 +4,7 @@ import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import jwt from "jsonwebtoken";
+import { User } from "@prisma/client";
 
 export interface TokenInterface {
   id: number;
@@ -11,6 +12,20 @@ export interface TokenInterface {
   expiration: Date;
   iat: number;
 }
+
+const blankUser = {
+  id: 0,
+  netId: "",
+  email: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  collegeId: 0,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  defaultTableId: 0,
+  pushToken: "",
+};
 
 type method = "GET" | "POST" | "DELETE";
 
@@ -20,7 +35,7 @@ interface ConfigType {
     req: NextApiRequest,
     res: NextApiResponse,
     data: {
-      userId: number;
+      user: User;
       collegeId: number;
     }
   ) => void;
@@ -61,13 +76,25 @@ export default function withHandler({
           return res.status(400).json({
             ok: false,
             error: errorMessages.token.tokenExpired,
-            tokenExpired: true, // temporary
+            tokenExpired: true,
           });
         }
 
-        await handler(req, res, { userId, collegeId });
+        const user = await client.user.findUnique({
+          where: {
+            id: userId,
+          },
+        });
+        if (!user) {
+          return res.status(400).json({
+            ok: false,
+            error: errorMessages.user.userNotFound,
+          });
+        }
+
+        await handler(req, res, { user, collegeId });
       } else {
-        await handler(req, res, { userId: 0, collegeId: 0 });
+        await handler(req, res, { user: blankUser, collegeId: 0 });
       }
     } catch (error) {
       console.log(error);

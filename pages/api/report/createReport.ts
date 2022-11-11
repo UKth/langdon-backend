@@ -3,15 +3,15 @@ import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
-import { ReportTargetType } from "@prisma/client";
+import { ReportTargetType, User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
-    userId,
+    user,
   }: {
-    userId: number;
+    user: User;
   }
 ) {
   const {
@@ -35,7 +35,7 @@ async function handler(
     data: {
       user: {
         connect: {
-          id: userId,
+          id: user.id,
         },
       },
       content,
