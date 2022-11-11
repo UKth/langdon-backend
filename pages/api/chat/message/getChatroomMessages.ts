@@ -53,6 +53,7 @@ async function handler(
           : {}),
         take: 30,
       },
+      post: true,
     },
   });
 
@@ -71,6 +72,7 @@ async function handler(
   return res.json({
     ok: true,
     messages: handleDates(chatroom.messages),
+    post: chatroom.post,
   });
 }
 
