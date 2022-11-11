@@ -81,9 +81,6 @@ async function handler(
     ? await client.post.findUnique({ where: { id: postId } })
     : null;
 
-  console.log("postId", postId);
-  console.log(post);
-
   const chatroom = await client.chatroom.create({
     data: {
       members: {

@@ -29,17 +29,13 @@ const Home: NextPage = () => {
   const [selectedCourse, setSelectedCourse] = useState<Course>();
   const getCourseData = async () => {
     setSelectedCourse(undefined);
-    console.log("hello");
     const data = await getData("/api/course/getCourse/" + keyword);
-    console.log(data, keyword);
     if (data?.ok) {
       setSearchedData(data?.courseData);
     }
   };
   const getClassData = async (id: number) => {
-    console.log("world");
     const data = await getData("/api/class/getClass/" + id);
-    console.log(data, id);
     if (data?.ok) {
       setClassData(data?.classData);
     }
