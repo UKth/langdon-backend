@@ -1,4 +1,5 @@
 import client from "@libs/server/client";
+import { User } from "@prisma/client";
 
 export interface ResponseType {
   ok: boolean;
@@ -97,4 +98,13 @@ export const sendOnePush = (pushToken: string, content: contentType) => {
     },
     body: JSON.stringify(message),
   });
+};
+
+export const getNameString = (user: User) => {
+  return (
+    user.firstName +
+    " " +
+    (user.middleName ? user.middleName + " " : "") +
+    user.lastName
+  );
 };

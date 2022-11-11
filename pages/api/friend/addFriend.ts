@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { isFriend, ResponseType } from "@libs/server/util";
+import {
+  getNameString,
+  isFriend,
+  ResponseType,
+  sendOnePush,
+} from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -28,6 +33,14 @@ async function handler(
     return res.status(400).json({
       ok: false,
       error: errorMessages.token.tokenNotMatched,
+    });
+  }
+
+  const user = await client.user.findUnique({ where: { id: userId } });
+  if (!user) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.user.userNotFound,
     });
   }
 
@@ -105,6 +118,10 @@ async function handler(
       error: errorMessages.friend.addFriendFailed,
     });
   }
+
+  sendOnePush(targetUser.pushToken, {
+    body: getNameString(user) + " adds you as a friend.",
+  });
 
   await client.friendRequest.delete({
     where: {
