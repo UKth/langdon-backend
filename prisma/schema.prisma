@@ -37,17 +37,17 @@ model User {
   friendUserFriends Friend[]   @relation(name: "friend_users")
   createdAt         DateTime   @default(now())
   updatedAt         DateTime   @updatedAt
-  Board             Board[]
-  Post              Post[]
-  Comment           Comment[]
+  boards            Board[]
+  posts             Post[]
+  comments          Comment[]
   likedPost         Post[]     @relation("like_post")
   likedComment      Comment[]  @relation("like_comment")
-  Report            Report[]
+  reports           Report[]
   tables            Table[]
   defaultTable      Table      @relation("default_table", fields: [defaultTableId], references: [id])
   defaultTableId    Int        @unique
   pushToken         String
-  Message           Message[]
+  messages          Message[]
   chatrooms         Chatroom[]
 
   @@index([netId])
