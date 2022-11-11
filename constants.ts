@@ -4,6 +4,8 @@ export const ACCESS_TOKEN_EXPIRATION = 1 * 60 * min_ts;
 export const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * min_ts; // 30days
 export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
 
+export const SUPPORT_EMAIL = "collegetable.dev@gmail.com";
+
 export const MIN_TITLE_LENGTH = 3;
 export const MIN_CONTENT_LENGTH = 3;
 
@@ -71,12 +73,19 @@ export const errorMessages = {
     deleteOthersComment: "You can only delete your comment.",
     commentNotDeleted: "Comment not deleted. Please try again.",
   },
+  chatroom: {
+    chatroomNotFound: "Can't find chatroom.",
+    notMember: "You're not a member of the room.",
+    membersNotTwo:
+      "Something's wrong in data. Please contact via " + SUPPORT_EMAIL,
+  },
   report: {
     invalidCreateReportParams: "Target, type is required",
     reportNotCreated: "Report not created. Please try again.",
   },
   idRequired: "Id required.",
   loginRequired: "Login required.",
+  invalidParams: "Invalid parameters.",
 };
 
 export const EXAMDATE_OFFSET = 1670750000000; // why??
