@@ -75,6 +75,11 @@ async function handler(
             post: { connect: { id: post.id } },
           }
         : {}),
+      messages: {
+        connect: {
+          id: message.id,
+        },
+      },
     },
   });
 
