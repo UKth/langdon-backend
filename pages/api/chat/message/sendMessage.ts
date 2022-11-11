@@ -73,23 +73,17 @@ async function handler(
           id: user.id,
         },
       },
+      chatroom: {
+        connect: {
+          id: chatroom.id,
+        },
+      },
+      lastChatroom: {
+        connect: {
+          id: chatroom.id,
+        },
+      },
       content,
-    },
-  });
-
-  const updateChatroom = await client.chatroom.update({
-    where: { id: chatroom.id },
-    data: {
-      messages: {
-        connect: {
-          id: message.id,
-        },
-      },
-      lastMessage: {
-        connect: {
-          id: message.id,
-        },
-      },
     },
   });
 
