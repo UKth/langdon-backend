@@ -60,7 +60,9 @@ async function handler(
     },
   });
 
-  const post = await client.post.findUnique({ where: { id: postId } });
+  const post = postId
+    ? await client.post.findUnique({ where: { id: postId } })
+    : null;
 
   const chatroom = await client.chatroom.create({
     data: {
