@@ -79,7 +79,7 @@ async function handler(
   });
 
   sendOnePush(targetUser.pushToken, {
-    body: "Someone send you a message.",
+    body: "Someone sent you a message.",
     data: {
       route: "Chatrooms",
     },
