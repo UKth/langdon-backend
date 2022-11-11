@@ -36,6 +36,23 @@ async function handler(
       .json({ ok: false, error: errorMessages.invalidParams });
   }
 
+  const existingChatroom = await client.chatroom.findFirst({
+    where: {
+      AND: [
+        { members: { some: { id: user.id } } },
+        { members: { some: { id: targetId } } },
+        ...(postId ? [{ postId }] : []),
+      ],
+    },
+  });
+
+  if (existingChatroom) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.chatroom.alreadyExistingChatroom,
+    });
+  }
+
   const targetUser = await client.user.findUnique({
     where: {
       id: targetId,

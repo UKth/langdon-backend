@@ -78,6 +78,8 @@ export const errorMessages = {
     notMember: "You're not a member of the room.",
     membersNotTwo:
       "Something's wrong in data. Please contact via " + SUPPORT_EMAIL,
+    alreadyExistingChatroom:
+      "You already sent message. Please check your message tab.",
   },
   report: {
     invalidCreateReportParams: "Target, type is required",
