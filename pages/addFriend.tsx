@@ -33,7 +33,10 @@ const AddFriend: NextPage = () => {
           property="og:description"
           content="Someone want to be a friend with you"
         />
-        <meta property="og:image" content="%PUBLIC_URL%/og.png" />
+        <meta
+          property="og:image"
+          content="https://collegetable.vercel.app/og.png"
+        />
       </Head>
       <div className="flex h-96 flex-row items-center justify-center">
         <button

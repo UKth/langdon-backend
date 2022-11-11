@@ -19,6 +19,9 @@ model College {
   Course     Course[]
   Board      Board[]
   Table      Table[]
+
+  @@index([mailFooter])
+  @@index([name])
 }
 
 model User {
@@ -44,6 +47,8 @@ model User {
   defaultTable      Table     @relation("default_table", fields: [defaultTableId], references: [id])
   defaultTableId    Int       @unique
   pushToken         String
+
+  @@index([netId])
 }
 
 model Table {
@@ -63,6 +68,7 @@ model FriendRequest {
   code      Int
 
   @@unique([createrId])
+  @@index([createrId])
 }
 
 model Friend {
@@ -105,6 +111,9 @@ model Course {
   title                           String
   classes                         Class[]
   collegeId                       Int
+
+  @@index([collegeId, courseDesignationCompressed])
+  @@index([collegeId, fullCourseDesignationCompressed])
 }
 
 model Class {
@@ -176,7 +185,7 @@ model Board {
   type      BoardType
   college   College   @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   collegeId Int
-  Post      Post[]
+  Posts     Post[]
   createdBy User?     @relation(fields: [userId], references: [id])
   userId    Int?
   createdAt DateTime  @default(now())
@@ -218,6 +227,7 @@ model Comment {
   isAnonymous Boolean  @default(true)
 
   @@index([userId])
+  @@index([postId])
 }
 
 model Report {
