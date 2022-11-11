@@ -101,7 +101,7 @@ async function handler(
   });
 
   sendOnePush(targetUser.pushToken, {
-    body: 'Someone sent you a message."' + content + '"',
+    body: 'Someone sent you a message: "' + content + '"',
     data: {
       route: "Chatrooms",
     },
