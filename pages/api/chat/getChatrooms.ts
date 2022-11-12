@@ -30,6 +30,12 @@ async function handler(
     },
     include: {
       lastMessage: true,
+      members: {
+        select: {
+          id: true,
+          netId: true,
+        },
+      },
     },
     orderBy: {
       id: "desc",
