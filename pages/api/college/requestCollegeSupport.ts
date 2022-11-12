@@ -25,7 +25,7 @@ async function handler(
     });
   }
 
-  const collegeRequest = await client.collegeRequest.create({
+  const collegeSupportRequest = await client.collegeSupportRequest.create({
     data: {
       name,
       email,
@@ -34,7 +34,7 @@ async function handler(
     },
   });
 
-  if (!collegeRequest) {
+  if (!collegeSupportRequest) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.collegeRequest.requestNotCreated,
@@ -43,7 +43,7 @@ async function handler(
 
   sendMail({
     address: process.env.SUPPORT_EMAIL ?? "",
-    subject: "College table - new college request",
+    subject: "College table - new college support request",
     mailhtml: `
     <h3>New college request</h3>
     <br>
