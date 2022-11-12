@@ -53,7 +53,13 @@ async function handler(
           : {}),
         take: 30,
       },
-      post: true,
+      post: {
+        select: {
+          id: true,
+          title: true,
+          content: true,
+        },
+      },
     },
   });
 
