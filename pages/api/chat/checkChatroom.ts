@@ -44,7 +44,7 @@ async function handler(
 
   return res.status(400).json({
     ok: true,
-    chatroomExist: !!existingChatroom,
+    chatroomId: existingChatroom?.id ?? null,
   });
 }
 
