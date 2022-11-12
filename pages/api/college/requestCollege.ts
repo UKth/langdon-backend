@@ -3,7 +3,6 @@ import client from "@libs/server/client";
 import { ResponseType, sendMail } from "@libs/server/util";
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
-import { ReportTargetType, User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
