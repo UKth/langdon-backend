@@ -1,55 +1,69 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType } from "@libs/server/util";
+import { ResponseType, whiteSpaceRemover } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
 
 async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseType>
+  res: NextApiResponse<ResponseType>,
+  {
+    collegeId,
+  }: {
+    collegeId: number;
+  }
 ) {
   const {
-    query: { keyword },
-  } = req;
+    keyword: rawKeyword,
+  }: {
+    keyword?: string;
+  } = req.body;
+  const keyword = rawKeyword?.trim().toLowerCase();
 
-  if (Array.isArray(keyword)) {
-    return res.status(400);
-    // no message
+  if (!keyword?.length) {
+    return res
+      .status(400)
+      .json({ ok: false, error: errorMessages.course.keywordNotProvided });
   }
 
   const college = await client.college.findUnique({
     where: {
-      mailFooter: "wisc.edu",
+      id: collegeId,
     },
   });
 
   if (!college) {
     return res
       .status(400)
-      .json({ ok: false, error: errorMessages.user.collegeForEmailNotExist });
+      .json({ ok: false, error: errorMessages.college.collegeNotFound });
   }
 
-  const courseData = await client.course.findMany({
+  const courses = await client.course.findMany({
     where: {
-      OR: [
+      AND: [
+        { collegeId: college.id },
         {
-          courseDesignationCompressed: {
-            contains: keyword,
-            mode: "insensitive",
-          },
-        },
-        {
-          fullCourseDesignationCompressed: {
-            contains: keyword,
-            mode: "insensitive",
-          },
-        },
-        {
-          title: {
-            contains: keyword,
-            mode: "insensitive",
-          },
+          OR: [
+            {
+              courseDesignationCompressed: {
+                contains: whiteSpaceRemover(keyword),
+                mode: "insensitive",
+              },
+            },
+            {
+              fullCourseDesignationCompressed: {
+                contains: whiteSpaceRemover(keyword),
+                mode: "insensitive",
+              },
+            },
+            {
+              title: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+          ],
         },
       ],
     },
@@ -65,7 +79,7 @@ async function handler(
 
   return res.json({
     ok: true,
-    courseData, // TODO
+    courses,
   });
 }
 

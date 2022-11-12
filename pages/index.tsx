@@ -28,27 +28,24 @@ const Home: NextPage = () => {
   >();
   const [selectedCourse, setSelectedCourse] = useState<Course>();
   const getCourseData = async () => {
-    setSelectedCourse(undefined);
-    const data = await getData("/api/course/getCourse/" + keyword);
-    if (data?.ok) {
-      setSearchedData(data?.courseData);
-    }
+    // setSelectedCourse(undefined);
+    // const data = await getData("/api/course/getCourse/" + keyword);
+    // if (data?.ok) {
+    //   setSearchedData(data?.courseData);
+    // }
   };
   const getClassData = async (id: number) => {
-    const data = await getData("/api/class/getClass/" + id);
-    if (data?.ok) {
-      setClassData(data?.classData);
-    }
+    // const data = await getData("/api/class/getClass/" + id);
+    // if (data?.ok) {
+    //   setClassData(data?.classData);
+    // }
   };
   return (
     <div className="flex flex-row">
       <div className="flex-1">
         <div className="p-1">
           <p>enter keyword</p>
-          <input
-            className="border p-1 rounded"
-            onChange={(e) => setKeyword(e.target.value.replace(/ /g, ""))}
-          />
+          <input className="border p-1 rounded" />
           <button
             className="bg-blue-200 p-1 hover:scale-95 rounded"
             onClick={getCourseData}

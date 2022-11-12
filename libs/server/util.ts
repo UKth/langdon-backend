@@ -108,3 +108,5 @@ export const getNameString = (user: User) => {
     user.lastName
   );
 };
+
+export const whiteSpaceRemover = (text: string) => text.replace(/ /g, "");

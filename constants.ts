@@ -22,6 +22,9 @@ export const errorMessages = {
     userNotFound: "Can't find user",
     userAlreadyExistForEmail: "User already exist. Please try again.",
   },
+  college: {
+    collegeNotFound: "College not found.",
+  },
   table: {
     defaultTableNotFound: "Can't find table of the user.",
     tableNotFound: "Can't find the table.",
@@ -37,6 +40,7 @@ export const errorMessages = {
   },
   course: {
     alreadyEnrolledCoure: "You can't enroll two section of one class.",
+    keywordNotProvided: "You need to enter a search keyword.",
   },
   friend: {
     addNoTargetId: "Target value is required.",
