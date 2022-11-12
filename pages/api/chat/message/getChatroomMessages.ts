@@ -29,7 +29,7 @@ async function handler(
     },
     include: {
       members: {
-        select: { id: true },
+        select: { id: true, netId: true },
       },
       messages: {
         include: {
