@@ -78,6 +78,13 @@ async function handler(
     });
   }
 
+  if (table.termCode !== cls.course.termCode) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.table.invalidTermcodeClass,
+    });
+  }
+
   if (
     includeCourse(
       table.enrolledClasses.map((enrolledClass) => enrolledClass.course),

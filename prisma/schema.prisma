@@ -114,8 +114,8 @@ model Course {
   classes                         Class[]
   collegeId                       Int
 
-  @@index([collegeId, courseDesignationCompressed])
-  @@index([collegeId, fullCourseDesignationCompressed])
+  @@index([collegeId, termCode, courseDesignationCompressed])
+  @@index([collegeId, termCode, fullCourseDesignationCompressed])
 }
 
 model Class {

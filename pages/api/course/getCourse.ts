@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType, whiteSpaceRemover } from "@libs/server/util";
 
-import { errorMessages } from "@constants";
+import { currentTermcode, errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
 
 async function handler(
@@ -16,8 +16,10 @@ async function handler(
 ) {
   const {
     keyword: rawKeyword,
+    termCode = currentTermcode,
   }: {
     keyword?: string;
+    termCode?: number;
   } = req.body;
   const keyword = rawKeyword?.trim().toLowerCase();
 
@@ -43,6 +45,7 @@ async function handler(
     where: {
       AND: [
         { collegeId: college.id },
+        { termCode },
         {
           OR: [
             {

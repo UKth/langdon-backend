@@ -15,6 +15,8 @@ export const EXAMDATE_OFFSET = 1670750000000; // why??
 
 export const EXPO_PUSH_API_URL = "https://exp.host/--/api/v2/push/send";
 
+export const currentTermcode = 1232;
+
 export const errorMessages = {
   user: {
     emailNotRecieved: "Email is required.",
@@ -36,6 +38,7 @@ export const errorMessages = {
     tableNotFound: "Can't find the table.",
     connectUserFailed:
       "Failed to generating table. Please contact to support address.",
+    invalidTermcodeClass: "The class is not for this semester.",
   },
   token: {
     invalidToken: "Invalid token.",
