@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType, whiteSpaceRemover } from "@libs/server/util";
 
-import { currentTermcode, errorMessages } from "@constants";
+import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
 
 async function handler(
@@ -16,7 +16,7 @@ async function handler(
 ) {
   const {
     keyword: rawKeyword,
-    termCode = currentTermcode,
+    termCode = +(process.env.CURRENT_TERM_CODE ?? ""),
   }: {
     keyword?: string;
     termCode?: number;

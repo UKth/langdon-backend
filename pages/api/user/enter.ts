@@ -4,7 +4,6 @@ import { ResponseType } from "@libs/server/util";
 
 import {
   ACCESS_TOKEN_EXPIRATION,
-  currentTermcode,
   errorMessages,
   REFRESH_TOKEN_EXPIRATION,
   VERIFICATION_CODE_EXPIRATION,
@@ -144,7 +143,7 @@ async function handler(
                 id: college.id,
               },
             },
-            termCode: currentTermcode,
+            termCode: +(process.env.CURRENT_TERM_CODE ?? ""),
           },
         },
       },
