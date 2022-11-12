@@ -33,7 +33,9 @@ async function handler(
     pushToken?: string;
   } = req.body;
 
-  const isTester = email === "tester123@wisc.edu";
+  const isTester =
+    process.env.TESTER_EMAILS?.split(" ").includes(email) ?? false;
+
   const pushToken = p_token ?? "";
 
   const college = await client.college.findUnique({

@@ -6,12 +6,6 @@ export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
 
 export const SUPPORT_EMAIL = "collegetable.dev@gmail.com";
 
-export const TESTER_EMAILS = [
-  "tester123@wisc.edu",
-  "cheln@wisc.edu",
-  "bbangjo@wisc.edu",
-];
-
 export const MIN_TITLE_LENGTH = 3;
 export const MIN_CONTENT_LENGTH = 3;
 

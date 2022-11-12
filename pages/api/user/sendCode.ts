@@ -15,6 +15,9 @@ async function handler(
 ) {
   const { email } = req.body;
 
+  const isTester =
+    process.env.TESTER_EMAILS?.split(" ").includes(email) ?? false;
+
   if (!email) {
     return res
       .status(400)
@@ -79,7 +82,7 @@ async function handler(
     }
   }
 
-  if (email === "tester123@wisc.edu") {
+  if (isTester) {
     res.send({
       ok: true,
       ...(user
