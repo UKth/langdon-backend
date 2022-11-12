@@ -201,6 +201,12 @@ async function handler(
     process.env.SECRET_KEY || ""
   );
 
+  await client.verificationCode.delete({
+    where: {
+      id: foundCode.id,
+    },
+  });
+
   return res.json({
     ok: true,
     accessToken,
