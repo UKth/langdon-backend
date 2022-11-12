@@ -144,6 +144,7 @@ async function handler(
               },
             },
             termCode: +(process.env.CURRENT_TERM_CODE ?? ""),
+            title: process.env.CURRENT_TERM_NAME ?? "blank table",
           },
         },
       },
