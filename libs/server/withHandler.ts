@@ -94,6 +94,7 @@ export default function withHandler({
 
         await handler(req, res, { user, collegeId });
       } else {
+        console.error("Error: Something's wrong in withHandler.");
         await handler(req, res, { user: blankUser, collegeId: 0 });
       }
     } catch (error) {
