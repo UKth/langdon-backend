@@ -24,12 +24,14 @@ async function handler(
     targetId,
     postId,
     content,
+    isAnonymous: isAnon,
   }: {
     targetId?: number;
     postId?: number;
     content?: string;
+    isAnonymous?: boolean;
   } = req.body;
-
+  const isAnonymous = isAnon === undefined ? true : isAnon;
   if (!targetId || !content?.length) {
     return res
       .status(400)
@@ -97,6 +99,7 @@ async function handler(
           id: message.id,
         },
       },
+      isAnonymous,
     },
   });
 

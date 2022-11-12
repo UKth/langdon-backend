@@ -238,6 +238,7 @@ model Chatroom {
   id            Int       @id @default(autoincrement())
   post          Post?     @relation(fields: [postId], references: [id])
   postId        Int?
+  isAnonymous   Boolean   @default(true)
   members       User[]
   messages      Message[]
   lastMessage   Message   @relation("last_message", fields: [lastMessageId], references: [id])
