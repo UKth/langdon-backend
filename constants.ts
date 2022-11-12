@@ -6,8 +6,18 @@ export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
 
 export const SUPPORT_EMAIL = "collegetable.dev@gmail.com";
 
+export const TESTER_EMAILS = [
+  "tester123@wisc.edu",
+  "cheln@wisc.edu",
+  "bbangjo@wisc.edu",
+];
+
 export const MIN_TITLE_LENGTH = 3;
 export const MIN_CONTENT_LENGTH = 3;
+
+export const EXAMDATE_OFFSET = 1670750000000; // why??
+
+export const EXPO_PUSH_API_URL = "https://exp.host/--/api/v2/push/send";
 
 export const errorMessages = {
   user: {
@@ -89,11 +99,10 @@ export const errorMessages = {
     invalidCreateReportParams: "Target, type is required",
     reportNotCreated: "Report not created. Please try again.",
   },
+  collegeRequest: {
+    requestNotCreated: "Request not sent. Please try again.",
+  },
   idRequired: "Id required.",
   loginRequired: "Login required.",
   invalidParams: "Invalid parameters.",
 };
-
-export const EXAMDATE_OFFSET = 1670750000000; // why??
-
-export const EXPO_PUSH_API_URL = "https://exp.host/--/api/v2/push/send";

@@ -273,6 +273,10 @@ enum ReportTargetType {
 
 model CollegeRequest {
   id          Int    @id @default(autoincrement())
+  name        String
   email       String
   emailFooter String
+  pushToken   String
+
+  @@index([emailFooter])
 }
