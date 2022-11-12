@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import { ResponseType, sendMail } from "@libs/server/util";
-import { errorMessages } from "@constants";
+import { emailRegex, errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
 
 async function handler(
@@ -18,7 +18,7 @@ async function handler(
     pushToken?: string;
   } = req.body;
 
-  if (!email || !name) {
+  if (!email?.length || !name?.length || !emailRegex.test(email)) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.invalidParams,
