@@ -79,6 +79,10 @@ export const sendManyPush = (pushList: {
 export const sendOnePush = (pushToken: string, content: contentType) => {
   // TODO
   // let expo = new Expo();
+  if (!pushToken.length) {
+    console.error("Empty token.");
+    return;
+  }
 
   const message = {
     to: pushToken,
