@@ -28,7 +28,7 @@ const AddFriend: NextPage = () => {
         <meta property="og:title" content="College Table | Add friend" />
         <meta
           property="og:description"
-          content="Someone want to be a friend with you"
+          content="Someone wants to be a friend with you"
         />
         <meta
           property="og:image"

@@ -66,7 +66,7 @@ async function handler(
   }
 
   sendOnePush(post.createdBy.pushToken, {
-    body: "Someone create comment on your post.",
+    body: "Someone created comment on your post.",
     data: {
       route: "Post",
       params: {
