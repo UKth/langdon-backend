@@ -37,7 +37,7 @@ async function handler(
       AND: [
         { members: { some: { id: user.id } } },
         { members: { some: { id: targetId } } },
-        { postId: undefined },
+        { postId: null },
       ],
     },
   });
