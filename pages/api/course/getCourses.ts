@@ -16,13 +16,11 @@ async function handler(
 ) {
   const {
     keyword: rawKeyword,
-    termCode: code,
+    termCode = +(process.env.CURRENT_TERM_CODE ?? ""),
   }: {
     keyword?: string;
     termCode?: number;
   } = req.body;
-
-  const termCode = code ?? +(process.env.CURRENT_TERM_CODE ?? "");
   const keyword = rawKeyword?.trim().toLowerCase();
 
   if (!keyword?.length) {
