@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType } from "@libs/server/util";
+import { ResponseType, sendCode } from "@libs/server/util";
 import nodemailer, {
   SendMailOptions,
   SentMessageInfo,
@@ -92,41 +92,7 @@ async function handler(
     });
   }
 
-  let transporter: Transporter = nodemailer.createTransport({
-    /* Gmail Host */
-    host: "smtp.gmail.com",
-    /* Mail port */
-    port: 465,
-    /* your Mail Service Accounts */
-    auth: {
-      /* Gmail EMAIL */
-      user: process.env.MAILS_EMAIL,
-      /* Gmail PWD */
-      pass: process.env.MAILS_PWD,
-    },
-    secure: true,
-  });
-
-  try {
-    // let { name, email, subject, message } = req.body;
-
-    const mailhtml = `
-      <h3>Verification Code</h3>
-      <br>
-      <h3>${code}</h3>
-  `;
-
-    const mailOption: SendMailOptions = {
-      from: process.env.NODEMAIL_EMAIL,
-      to: email,
-      subject: "College Table - Verify your email",
-      html: mailhtml,
-    };
-
-    const info: SentMessageInfo = await transporter.sendMail(mailOption);
-
-    console.log("Email sent:", info.messageId);
-
+  if (await sendCode({ address: email, code })) {
     res.send({
       ok: true,
       ...(user
@@ -137,8 +103,8 @@ async function handler(
           }
         : {}),
     });
-  } catch (error) {
-    res.send({ ok: false, error });
+  } else {
+    res.send({ ok: false, error: "Fail to send mail. Please try again." });
   }
 }
 

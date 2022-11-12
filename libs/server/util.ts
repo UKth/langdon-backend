@@ -1,5 +1,10 @@
 import client from "@libs/server/client";
 import { User } from "@prisma/client";
+import nodemailer, {
+  SendMailOptions,
+  SentMessageInfo,
+  Transporter,
+} from "nodemailer";
 
 export interface ResponseType {
   ok: boolean;
@@ -102,6 +107,74 @@ export const sendOnePush = (pushToken: string, content: contentType) => {
     },
     body: JSON.stringify(message),
   });
+};
+
+export const sendCode = async ({
+  address,
+  code,
+}: {
+  address: string;
+  code: number;
+}) => {
+  const mailhtml = `
+    <h3>Verification Code</h3>
+    <br>
+    <h3>${code}</h3>
+  `;
+
+  return await sendMail({
+    address,
+    subject: "College Table - Verify your email",
+    mailhtml,
+  });
+};
+
+export const sendMail = async ({
+  address,
+  subject,
+  mailhtml,
+}: {
+  address: string;
+  subject: string;
+  mailhtml: string;
+}) => {
+  let transporter: Transporter = nodemailer.createTransport({
+    /* Gmail Host */
+    host: "smtp.gmail.com",
+    /* Mail port */
+    port: 465,
+    /* your Mail Service Accounts */
+    auth: {
+      /* Gmail EMAIL */
+      user: process.env.MAILS_EMAIL,
+      /* Gmail PWD */
+      pass: process.env.MAILS_PWD,
+    },
+    secure: true,
+  });
+
+  try {
+    const mailOption: SendMailOptions = {
+      from: process.env.NODEMAIL_EMAIL,
+      to: address,
+      subject,
+      html: mailhtml,
+    };
+
+    const info: SentMessageInfo = await transporter.sendMail(mailOption);
+
+    console.log("Email sent:", info.messageId);
+    return true;
+  } catch (error) {
+    console.error(
+      `Fail to send mail
+      to: ${address}
+      subject: ${subject}
+      ${mailhtml}`,
+      error
+    );
+    return false;
+  }
 };
 
 export const getNameString = (user: User) => {
