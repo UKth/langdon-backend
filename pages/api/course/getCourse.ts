@@ -77,6 +77,8 @@ async function handler(
     take: 30,
   });
 
+  console.log(courses);
+
   return res.json({
     ok: true,
     courses,
