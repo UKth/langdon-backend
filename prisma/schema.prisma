@@ -59,6 +59,7 @@ model Table {
   userId          Int?
   college         College @relation(fields: [collegeId], references: [id])
   termCode        Int
+  title           String
   enrolledClasses Class[]
   collegeId       Int
   defaultUser     User?   @relation("default_table")
