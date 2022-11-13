@@ -6,6 +6,14 @@ import withHandler from "@libs/server/withHandler";
 import { User } from "@prisma/client";
 import { errorMessages } from "@constants";
 
+export const targetUserProps = {
+  id: true,
+  netId: true,
+  firstName: true,
+  middleName: true,
+  lastName: true,
+};
+
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
@@ -29,15 +37,12 @@ async function handler(
     },
     include: {
       members: {
-        select: { id: true, netId: true },
+        select: targetUserProps,
       },
       messages: {
         include: {
           user: {
-            select: {
-              id: true,
-              netId: true,
-            },
+            select: targetUserProps,
           },
         },
         orderBy: {
