@@ -3,6 +3,7 @@ import client from "@libs/server/client";
 import {
   handleDates,
   ResponseType,
+  sendMessagePush,
   sendOnePush,
   validBoard,
 } from "@libs/server/util";
@@ -103,12 +104,7 @@ async function handler(
     },
   });
 
-  sendOnePush(targetUser.pushToken, {
-    body: 'Someone sent you a message: "' + content + '"',
-    data: {
-      route: "Chatrooms",
-    },
-  });
+  sendMessagePush(targetUser.pushToken, content);
 
   return res.json({
     ok: true,

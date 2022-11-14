@@ -109,6 +109,16 @@ export const sendOnePush = (pushToken: string, content: contentType) => {
   });
 };
 
+export const sendMessagePush = (pushToken: string, msg: string) => {
+  sendOnePush(pushToken, {
+    subtitle: "Someone sent you a message",
+    body: msg,
+    data: {
+      route: "Chatrooms",
+    },
+  });
+};
+
 export const sendCode = async ({
   address,
   code,

@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import {
-  handleDates,
-  ResponseType,
-  sendOnePush,
-  validBoard,
-} from "@libs/server/util";
+import { handleDates, ResponseType, sendMessagePush } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -87,12 +82,7 @@ async function handler(
     },
   });
 
-  sendOnePush(targetUser.pushToken, {
-    body: 'Someone sent you a message: "' + content + '"',
-    data: {
-      route: "Chatrooms",
-    },
-  });
+  sendMessagePush(targetUser.pushToken, content);
 
   return res.json({
     ok: true,
