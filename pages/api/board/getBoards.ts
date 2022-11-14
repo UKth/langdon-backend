@@ -23,6 +23,7 @@ async function handler(
   const boards = await client.board.findMany({
     where: {
       collegeId,
+      type: "general",
     },
 
     orderBy: {

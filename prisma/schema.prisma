@@ -201,7 +201,7 @@ model Board {
 }
 
 enum BoardType {
-  class
+  course
   general
 }
 
