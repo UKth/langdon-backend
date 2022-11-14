@@ -64,8 +64,8 @@ export const errorMessages = {
     classNotFound: "Class not found.",
     invalidClass: "Invalid class.",
     notEnrolledClass: "The user didn't enrolled the class.",
-    enrollFailed: "Enroll failed. Please try again.",
-    dropFailed: "Drop failed. Please try again.",
+    enrollFailed: "Add failed. Please try again.",
+    dropFailed: "Delete failed. Please try again.",
   },
   post: {
     boardIdRequired: "Board id is required.",
