@@ -41,7 +41,7 @@ async function handler(
       },
     },
     orderBy: {
-      id: "desc",
+      updatedAt: "desc",
     },
     ...(lastId
       ? {
