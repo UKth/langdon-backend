@@ -109,12 +109,14 @@ model Course {
   courseDesignationCompressed     String // whitespace removed
   fullCourseDesignation           String
   fullCourseDesignationCompressed String // whitespace removed
+  enrollmentPrerequisites         String
   minimumCredits                  Int
   maximumCredits                  Int
   title                           String
   classes                         Class[]
   collegeId                       Int
 
+  @@unique([courseId, termCode, subjectCode])
   @@index([collegeId, termCode, courseDesignationCompressed])
   @@index([collegeId, termCode, fullCourseDesignationCompressed])
 }
@@ -163,7 +165,7 @@ model ClassMeeting {
 model Building {
   id            Int            @id @default(autoincrement())
   buildingCode  String         @unique
-  buildingName  String
+  buildingName  String?
   streetAddress String?
   latitude      Float?
   longitude     Float?
