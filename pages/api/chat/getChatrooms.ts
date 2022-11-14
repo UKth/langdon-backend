@@ -36,6 +36,9 @@ async function handler(
           netId: true,
         },
       },
+      post: {
+        select: { title: true },
+      },
     },
     orderBy: {
       id: "desc",
