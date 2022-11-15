@@ -53,7 +53,7 @@ async function handler(
     return res.status(400).json({
       ok: false,
       error: errorMessages.chatroom.alreadyExistingChatroom,
-      chatroom: existingChatroom,
+      existingChatroom: handleDates(existingChatroom),
     });
   }
 
