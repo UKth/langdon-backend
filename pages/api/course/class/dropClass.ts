@@ -27,13 +27,18 @@ async function handler(
 ) {
   const {
     classId,
-    tableId: t_id,
+    tableId,
   }: {
-    classId: number;
+    classId?: number;
     tableId?: number;
   } = req.body;
 
-  const tableId = t_id ?? user.defaultTableId;
+  if (!classId || !tableId) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.invalidParams,
+    });
+  }
 
   const table = await client.table.findFirst({
     where: {

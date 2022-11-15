@@ -28,11 +28,18 @@ async function handler(
 ) {
   const {
     classId,
-    tableId: t_id,
+    tableId,
   }: {
-    classId: number;
+    classId?: number;
     tableId?: number;
   } = req.body;
+
+  if (!classId || !tableId) {
+    return res.status(400).json({
+      ok: false,
+      error: errorMessages.invalidParams,
+    });
+  }
 
   const cls = await client.class.findUnique({
     where: { id: classId },
@@ -55,8 +62,6 @@ async function handler(
     });
   }
 
-  const tableId = t_id ?? user.defaultTableId;
-
   const table = await client.table.findFirst({
     where: {
       id: tableId,
@@ -77,6 +82,8 @@ async function handler(
       error: errorMessages.table.tableNotFound,
     });
   }
+
+  console.log(table, cls.course);
 
   if (table.termCode !== cls.course.termCode) {
     return res.status(400).json({
