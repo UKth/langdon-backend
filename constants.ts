@@ -43,6 +43,9 @@ export const errorMessages = {
       "Failed to generating table. Please contact to support address.",
     invalidTermcodeClass: "The class is not for this semester.",
     tableNotCreated: "Table not created. Please try again.",
+    tableDeletionFailed: "Can't delete the table. Please try again.",
+    tableSetDefaultFailed:
+      "Can't delete the table as a public table. Please try again.",
   },
   token: {
     invalidToken: "Invalid token.",
