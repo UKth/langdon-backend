@@ -32,6 +32,13 @@ async function handler(
         },
       },
       post: true,
+
+      createdBy: {
+        select: {
+          id: true,
+          netId: true,
+        },
+      },
     },
     orderBy: {
       id: "desc",
