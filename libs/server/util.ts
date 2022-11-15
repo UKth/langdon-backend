@@ -223,19 +223,21 @@ export const mailHtmlGenerator = (code: number) => {
               This code will expire in 3 minutes after the email is sent. Once
               the code expires, you will need to request a new verification code.
             </p>
-            <p><strong>College Table Support</strong></p>
+            
 
           </td>
           <td></td>
         </tr>
         <tr>
-          <td></td>
+          <td style="text-align: right">
+            <p><strong>College Table Support</strong></p>
+          </td>
           <td style="text-align: right">
             <img
               src="https://collegetable.vercel.app/logo_192x192.png"
               alt="College Table"
-              height="33"
-              width="33"
+              height="70"
+              width="70"
             />
           </td>
           <td></td>
