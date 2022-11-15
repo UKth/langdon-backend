@@ -21,7 +21,7 @@ async function handler(
     tableId?: number;
   } = req.body;
 
-  if (tableId) {
+  if (!tableId) {
     return res.status(400).json({
       ok: false,
       error: errorMessages.invalidParams,
