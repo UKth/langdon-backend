@@ -10,6 +10,7 @@ import {
 } from "@constants";
 import jwt from "jsonwebtoken";
 import withHandler from "@libs/server/withHandler";
+import { TermCode } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
@@ -143,7 +144,7 @@ async function handler(
                 id: college.id,
               },
             },
-            termCode: process.env.CURRENT_TERM_CODE ?? "T_1232",
+            termCode: (process.env.CURRENT_TERM_CODE as TermCode) ?? "T_1232",
             title: process.env.CURRENT_TERM_NAME ?? "Blank table",
           },
         },
