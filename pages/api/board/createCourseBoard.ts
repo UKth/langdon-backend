@@ -75,6 +75,7 @@ async function handler(
 
   return res.json({
     ok: true,
+    board: true,
   });
 }
 
