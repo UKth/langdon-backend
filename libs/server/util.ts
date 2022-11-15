@@ -235,6 +235,7 @@ export const mailHtmlGenerator = (code: number) => {
               src="https://collegetable.vercel.app/logo_192x192.png"
               alt="College Table"
               height="33"
+              width="33"
             />
           </td>
           <td></td>
