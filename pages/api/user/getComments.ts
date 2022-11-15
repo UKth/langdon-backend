@@ -15,13 +15,35 @@ async function handler(
     user: User;
   }
 ) {
+  const {
+    lastId,
+  }: {
+    lastId?: number;
+  } = req.body;
+
   const comments = await client.comment.findMany({
     where: {
       userId: user.id,
     },
+    include: {
+      _count: {
+        select: {
+          likedUsers: true,
+        },
+      },
+      post: true,
+    },
     orderBy: {
       id: "desc",
     },
+    ...(lastId
+      ? {
+          cursor: {
+            id: lastId,
+          },
+          skip: 1,
+        }
+      : {}),
     take: 30,
   });
 

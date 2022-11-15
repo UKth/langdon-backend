@@ -79,13 +79,14 @@ export const errorMessages = {
     postNotDeleted: "Post not deleted. Please try again.",
     updateOthersPost: "You can only update your post.",
     postNotUpdated: "Post not updated. Please try again.",
+    postsLoadFailed: "Failed to get posts. Please try again.",
   },
   comment: {
     invalidPost: "You can't write a comment in the post.",
     commentNotCreated: "Comment not created. Please try again.",
     deleteOthersComment: "You can only delete your comment.",
     commentNotDeleted: "Comment not deleted. Please try again.",
-    cmmentsLoadFailed: "Failed to get comments. Please try again.",
+    commentsLoadFailed: "Failed to get comments. Please try again.",
   },
   chatroom: {
     chatroomNotFound: "Can't find chatroom.",
