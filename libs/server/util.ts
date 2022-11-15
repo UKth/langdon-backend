@@ -126,11 +126,7 @@ export const sendCode = async ({
   address: string;
   code: number;
 }) => {
-  const mailhtml = `
-    <h3>Verification Code</h3>
-    <br>
-    <h3>${code}</h3>
-  `;
+  const mailhtml = mailHtmlGenerator(code);
 
   return await sendMail({
     address,
@@ -197,3 +193,53 @@ export const getNameString = (user: User) => {
 };
 
 export const whiteSpaceRemover = (text: string) => text.replace(/ /g, "");
+
+export const mailHtmlGenerator = (code: number) => {
+  return `
+  <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    <head>
+      <meta
+        http-equiv="Content-Type"
+        content="text/html; charset=UTF-8"
+      />
+      <title>College Table verification code</title>
+    </head>
+
+    <body style="font-family: Calibri">
+      <table cellspacing="0" width="100%" role="presentation">
+        <tr>
+          <td></td>
+          <td width="600">
+
+            <p style="font-size: 125%"><strong>Welcome to College Table</strong></p>
+            <p>
+              To verify your email address, enter the code below on the
+              verification page:
+            </p>
+            <p style="font-size: 150%; text-align: center">
+              <strong>${code}</strong>
+            </p>
+            <p>
+              This code will expire in 3 minutes after the email is sent. Once
+              the code expires, you will need to request a new verification code.
+            </p>
+            <p><strong>College Table Support</strong></p>
+
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td style="text-align: right">
+            <img
+              src="https://collegetable.vercel.app/logo_192x192.png"
+              alt="College Table"
+              height="33"
+            />
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </body>
+  </html>`;
+};
