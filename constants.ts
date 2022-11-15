@@ -93,6 +93,9 @@ export const errorMessages = {
     alreadyExistingChatroom:
       "You already sent message. Please check your message tab.",
   },
+  board: {
+    boardNotCreated: "Failed to create new board. Please try again.",
+  },
   report: {
     invalidCreateReportParams: "Target, type is required",
     reportNotCreated: "Report not created. Please try again.",
