@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType } from "@libs/server/util";
+import { handleDates, ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -57,7 +57,7 @@ async function handler(
 
   return res.json({
     ok: true,
-    posts,
+    posts: handleDates(posts),
   });
 }
 
