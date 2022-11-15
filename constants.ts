@@ -15,6 +15,11 @@ export const EXAMDATE_OFFSET = 1670750000000; // why??
 
 export const EXPO_PUSH_API_URL = "https://exp.host/--/api/v2/push/send";
 
+export const termNames = {
+  1232: "Fall 2022",
+  1234: "Spring 2023",
+};
+
 export const errorMessages = {
   user: {
     emailNotRecieved: "Email is required.",
@@ -37,6 +42,7 @@ export const errorMessages = {
     connectUserFailed:
       "Failed to generating table. Please contact to support address.",
     invalidTermcodeClass: "The class is not for this semester.",
+    tableNotCreated: "Table not created. Please try again.",
   },
   token: {
     invalidToken: "Invalid token.",
