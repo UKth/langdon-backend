@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { isFriend, ResponseType } from "@libs/server/util";
+import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -15,36 +15,26 @@ async function handler(
     user: User;
   }
 ) {
-  const userDetails = await client.user.findUnique({
+  const comments = await client.comment.findMany({
     where: {
-      id: user.id,
+      userId: user.id,
     },
-    include: {
-      posts: {
-        take: 10,
-      },
-      comments: {
-        take: 10,
-      },
-      likedPost: {
-        take: 10,
-      },
-      likedComment: {
-        take: 10,
-      },
+    orderBy: {
+      id: "desc",
     },
+    take: 30,
   });
 
-  if (!userDetails) {
+  if (!comments) {
     return res.status(400).json({
       ok: false,
-      error: errorMessages.user.userNotFound,
+      error: errorMessages.comment.commentsLoadFailed,
     });
   }
 
   return res.json({
     ok: true,
-    userDetails,
+    comments,
   });
 }
 

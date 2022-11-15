@@ -85,6 +85,7 @@ export const errorMessages = {
     commentNotCreated: "Comment not created. Please try again.",
     deleteOthersComment: "You can only delete your comment.",
     commentNotDeleted: "Comment not deleted. Please try again.",
+    cmmentsLoadFailed: "Failed to get comments. Please try again.",
   },
   chatroom: {
     chatroomNotFound: "Can't find chatroom.",
