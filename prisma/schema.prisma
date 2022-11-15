@@ -58,7 +58,7 @@ model Table {
   user            User?    @relation(fields: [userId], references: [id])
   userId          Int?
   college         College  @relation(fields: [collegeId], references: [id])
-  termCode        TermCode @default(T_1232)
+  termCode        TermCode
   title           String
   enrolledClasses Class[]
   collegeId       Int
@@ -108,7 +108,7 @@ model Course {
   id                              Int      @id @default(autoincrement())
   college                         College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   courseId                        String // 000441
-  termCode                        TermCode @default(T_1232)
+  termCode                        TermCode
   subjectCode                     Int //112
   courseDesignation               String
   courseDesignationCompressed     String // whitespace removed
