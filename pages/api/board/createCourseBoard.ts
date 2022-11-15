@@ -44,6 +44,11 @@ async function handler(
       .status(400)
       .json({ ok: false, error: errorMessages.course.courseNotFound });
   }
+  if (course.boardId) {
+    return res
+      .status(400)
+      .json({ ok: false, error: errorMessages.course.boardAlreadyExist });
+  }
 
   const board = await client.board.create({
     data: {

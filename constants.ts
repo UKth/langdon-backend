@@ -49,6 +49,7 @@ export const errorMessages = {
     alreadyEnrolledCoure: "You can't enroll two section of one class.",
     keywordNotProvided: "You need to enter a search keyword.",
     courseNotFound: "Can't find the course.",
+    boardAlreadyExist: "Invalid request. Please try again.",
   },
   friend: {
     addNoTargetId: "Target value is required.",

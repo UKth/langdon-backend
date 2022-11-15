@@ -193,7 +193,6 @@ model Board {
   college   College   @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   collegeId Int
   course    Course?
-  courseId  Int?      @unique
   Posts     Post[]
   createdBy User?     @relation(fields: [userId], references: [id])
   userId    Int?
