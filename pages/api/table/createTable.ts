@@ -3,7 +3,7 @@ import client from "@libs/server/client";
 import { ResponseType } from "@libs/server/util";
 import { errorMessages, termNames } from "@constants";
 import withHandler from "@libs/server/withHandler";
-import { User } from "@prisma/client";
+import { TermCode, User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
@@ -20,17 +20,17 @@ async function handler(
     termCode,
     title,
   }: {
-    termCode?: number;
+    termCode?: TermCode;
     title?: string;
   } = req.body;
 
-  if (!termCode) {
+  if (!termCode || !Object.keys(TermCode).includes(termCode)) {
     return res
       .status(400)
       .json({ ok: false, error: errorMessages.invalidParams });
   }
 
-  if (!Object.keys(termNames).includes(termCode + "")) {
+  if (!Object.keys(termNames).includes(termCode)) {
     return res
       .status(400)
       .json({ ok: false, error: errorMessages.invalidParams });
@@ -44,8 +44,7 @@ async function handler(
         },
       },
       termCode,
-      title:
-        title ?? termNames[termCode as keyof typeof termNames] ?? "Blank table",
+      title: title ?? termNames[termCode] ?? "Blank table",
       college: {
         connect: {
           id: collegeId,

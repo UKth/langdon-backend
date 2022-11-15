@@ -4,6 +4,7 @@ import { ResponseType, whiteSpaceRemover } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { TermCode } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
@@ -16,10 +17,10 @@ async function handler(
 ) {
   const {
     keyword: rawKeyword,
-    termCode = +(process.env.CURRENT_TERM_CODE ?? ""),
+    termCode = (process.env.CURRENT_TERM_CODE as TermCode) ?? "T_1232",
   }: {
     keyword?: string;
-    termCode?: number;
+    termCode?: TermCode;
   } = req.body;
   const keyword = rawKeyword?.trim().toLowerCase();
 

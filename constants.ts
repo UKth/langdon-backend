@@ -16,8 +16,8 @@ export const EXAMDATE_OFFSET = 1670750000000; // why??
 export const EXPO_PUSH_API_URL = "https://exp.host/--/api/v2/push/send";
 
 export const termNames = {
-  1232: "Fall 2022",
-  1234: "Spring 2023",
+  T_1232: "Fall 2022",
+  T_1234: "Spring 2023",
 };
 
 export const errorMessages = {

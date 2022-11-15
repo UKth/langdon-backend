@@ -54,15 +54,20 @@ model User {
 }
 
 model Table {
-  id              Int     @id @default(autoincrement())
-  user            User?   @relation(fields: [userId], references: [id])
+  id              Int      @id @default(autoincrement())
+  user            User?    @relation(fields: [userId], references: [id])
   userId          Int?
-  college         College @relation(fields: [collegeId], references: [id])
-  termCode        Int
+  college         College  @relation(fields: [collegeId], references: [id])
+  termCode        TermCode @default(T_1232)
   title           String
   enrolledClasses Class[]
   collegeId       Int
-  defaultUser     User?   @relation("default_table")
+  defaultUser     User?    @relation("default_table")
+}
+
+enum TermCode {
+  T_1232
+  T_1234
 }
 
 model FriendRequest {
@@ -100,10 +105,10 @@ model VerificationCode {
 }
 
 model Course {
-  id                              Int     @id @default(autoincrement())
-  college                         College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  id                              Int      @id @default(autoincrement())
+  college                         College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   courseId                        String // 000441
-  termCode                        Int //1232
+  termCode                        TermCode @default(T_1232)
   subjectCode                     Int //112
   courseDesignation               String
   courseDesignationCompressed     String // whitespace removed
@@ -115,8 +120,8 @@ model Course {
   title                           String
   classes                         Class[]
   collegeId                       Int
-  board                           Board?  @relation(fields: [boardId], references: [id])
-  boardId                         Int?    @unique
+  board                           Board?   @relation(fields: [boardId], references: [id])
+  boardId                         Int?     @unique
 
   @@unique([courseId, termCode, subjectCode])
   @@index([collegeId, termCode, courseDesignationCompressed])
