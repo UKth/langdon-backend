@@ -162,7 +162,7 @@ model ClassMeeting {
   meetingDays         String?
   building            Building? @relation(fields: [buildingId], references: [id])
   room                String?
-  examDate            Int?
+  examDate            DateTime?
   buildingId          Int?
   sectionId           Int
 
