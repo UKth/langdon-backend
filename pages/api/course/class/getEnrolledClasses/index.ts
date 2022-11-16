@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { isFriend, ResponseType } from "@libs/server/util";
+import { handleDates, isFriend, ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -62,7 +62,7 @@ async function handler(
 
   return res.json({
     ok: true,
-    enrolledClasses: userDefaultTable.enrolledClasses,
+    enrolledClasses: handleDates(userDefaultTable.enrolledClasses),
   });
 }
 

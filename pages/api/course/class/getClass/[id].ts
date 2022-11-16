@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType } from "@libs/server/util";
+import { handleDates, ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import jwt from "jsonwebtoken";
@@ -33,7 +33,7 @@ async function handler(
       .json({ ok: false, error: errorMessages.user.collegeForEmailNotExist });
   }
 
-  const classData = await client.class.findUnique({
+  const cls = await client.class.findUnique({
     where: {
       id: +id,
     },
@@ -53,7 +53,7 @@ async function handler(
 
   return res.json({
     ok: true,
-    classData, //TODO
+    class: handleDates(cls), //TODO
   });
 }
 

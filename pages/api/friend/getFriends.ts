@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import { ResponseType } from "@libs/server/util";
+import { handleDates, ResponseType } from "@libs/server/util";
 
 import withHandler from "@libs/server/withHandler";
 import { User } from "@prisma/client";
@@ -38,10 +38,12 @@ async function handler(
 
   return res.json({
     ok: true,
-    friendsData: friendList.map((user) => ({
-      ...user,
-      pushToken: "",
-    })), // TODO
+    friendsData: handleDates(
+      friendList.map((user) => ({
+        ...user,
+        pushToken: "",
+      }))
+    ),
   });
 }
 
