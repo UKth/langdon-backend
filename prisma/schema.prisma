@@ -63,6 +63,8 @@ model Table {
   enrolledClasses Class[]
   collegeId       Int
   defaultUser     User?    @relation("default_table")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 enum TermCode {
