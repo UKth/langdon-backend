@@ -1,4 +1,3 @@
-import { EXAMDATE_OFFSET } from "@constants";
 import { getData } from "@libs/client/util";
 import {
   Building,
@@ -109,11 +108,7 @@ const Home: NextPage = () => {
                       <p>{meeting.meetingType}</p>
                       {!isExam ? <p>{meeting.meetingDays}</p> : null}
                       {meeting.examDate ? (
-                        <p>
-                          {new Date(
-                            meeting.examDate + EXAMDATE_OFFSET || 0
-                          ).toDateString()}
-                        </p>
+                        <p>{new Date(meeting.examDate).toDateString()}</p>
                       ) : null}
                       {meetingTimeStart.valueOf() &&
                       meetingTimeEnd.valueOf() ? (
