@@ -1,12 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import {
-  handleDates,
-  ResponseType,
-  sendMessagePush,
-  sendOnePush,
-  validBoard,
-} from "@libs/server/util";
+import { handleDates, ResponseType, sendMessagePush } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
@@ -105,7 +99,7 @@ async function handler(
     },
   });
 
-  sendMessagePush(targetUser.pushToken, content);
+  await sendMessagePush(targetUser.pushToken, content);
 
   return res.json({
     ok: true,

@@ -80,7 +80,7 @@ export const sendManyPush = (pushList: {
   content: contentType;
 }) => {};
 
-export const sendOnePush = (pushToken: string, content: contentType) => {
+export const sendOnePush = async (pushToken: string, content: contentType) => {
   // TODO
   // let expo = new Expo();
   if (!pushToken.length) {
@@ -97,7 +97,7 @@ export const sendOnePush = (pushToken: string, content: contentType) => {
 
   console.log("push sending...\n" + JSON.stringify(message));
 
-  fetch("https://exp.host/--/api/v2/push/send", {
+  await fetch("https://exp.host/--/api/v2/push/send", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -108,8 +108,8 @@ export const sendOnePush = (pushToken: string, content: contentType) => {
   });
 };
 
-export const sendMessagePush = (pushToken: string, msg: string) => {
-  sendOnePush(pushToken, {
+export const sendMessagePush = async (pushToken: string, msg: string) => {
+  await sendOnePush(pushToken, {
     subtitle: "Someone sent you a message",
     body: msg,
     data: {

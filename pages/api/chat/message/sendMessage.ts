@@ -82,7 +82,7 @@ async function handler(
     },
   });
 
-  sendMessagePush(targetUser.pushToken, content);
+  await sendMessagePush(targetUser.pushToken, content);
 
   return res.json({
     ok: true,

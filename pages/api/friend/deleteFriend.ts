@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
-import {
-  getNameString,
-  isFriend,
-  ResponseType,
-  sendOnePush,
-} from "@libs/server/util";
+import { ResponseType } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";

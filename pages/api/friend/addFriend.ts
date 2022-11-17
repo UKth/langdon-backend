@@ -105,7 +105,7 @@ async function handler(
     });
   }
 
-  sendOnePush(targetUser.pushToken, {
+  await sendOnePush(targetUser.pushToken, {
     body: getNameString(user) + " adds you as a friend.",
   });
 

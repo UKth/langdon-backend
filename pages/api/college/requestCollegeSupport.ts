@@ -41,7 +41,7 @@ async function handler(
     });
   }
 
-  sendMail({
+  await sendMail({
     address: process.env.SUPPORT_EMAIL ?? "",
     subject: "College table - new college support request",
     mailhtml: `
