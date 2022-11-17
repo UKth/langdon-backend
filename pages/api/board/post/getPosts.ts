@@ -63,6 +63,7 @@ async function handler(
   return res.json({
     ok: true,
     posts: handleDates(posts),
+    lastId,
   });
 }
 
