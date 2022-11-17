@@ -18,6 +18,12 @@ async function handler(
     query: { id },
   } = req;
 
+  const {
+    lastCommentId,
+  }: {
+    lastCommentId?: number;
+  } = req.body;
+
   if (!id || Array.isArray(id)) {
     return res.status(400).json({ ok: false, error: errorMessages.idRequired });
   }
@@ -40,6 +46,15 @@ async function handler(
         orderBy: {
           id: "desc",
         },
+        ...(lastCommentId
+          ? {
+              cursor: {
+                id: lastCommentId,
+              },
+              skip: 1,
+            }
+          : {}),
+        take: 30,
       },
       _count: {
         select: {
@@ -72,6 +87,7 @@ async function handler(
           }
         : {}),
     }),
+    lastCommentId,
   });
 }
 

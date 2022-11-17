@@ -25,10 +25,10 @@ async function handler(
 ) {
   const {
     chatroomId,
-    lastId,
+    lastMessageId,
   }: {
     chatroomId?: number;
-    lastId?: number;
+    lastMessageId?: number;
   } = req.body;
 
   const chatroom = await client.chatroom.findUnique({
@@ -48,10 +48,10 @@ async function handler(
         orderBy: {
           id: "desc",
         },
-        ...(lastId
+        ...(lastMessageId
           ? {
               cursor: {
-                id: lastId,
+                id: lastMessageId,
               },
               skip: 1,
             }
@@ -83,7 +83,7 @@ async function handler(
   return res.json({
     ok: true,
     chatroom: handleDates(chatroom),
-    lastId,
+    lastMessageId,
   });
 }
 
