@@ -19,23 +19,6 @@ async function handler(
     where: {
       userId: user.id,
     },
-    include: {
-      enrolledClasses: {
-        include: {
-          course: true,
-          sections: {
-            include: {
-              classMeetings: {
-                include: {
-                  building: true,
-                },
-              },
-              instructor: true,
-            },
-          },
-        },
-      },
-    },
     take: 30,
   });
 
