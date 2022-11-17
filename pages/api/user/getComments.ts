@@ -64,6 +64,7 @@ async function handler(
   return res.json({
     ok: true,
     comments: handleDates(comments),
+    lastId,
   });
 }
 

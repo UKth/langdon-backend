@@ -57,6 +57,7 @@ async function handler(
   return res.json({
     ok: true,
     chatrooms: handleDates(chatrooms),
+    lastId,
   });
 }
 
