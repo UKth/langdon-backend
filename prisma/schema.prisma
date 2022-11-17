@@ -123,7 +123,7 @@ model Course {
   classes                         Class[]
   collegeId                       Int
   board                           Board?   @relation(fields: [boardId], references: [id])
-  boardId                         Int?     @unique
+  boardId                         Int?
 
   @@unique([courseId, termCode, subjectCode])
   @@index([collegeId, termCode, courseDesignationCompressed])
@@ -196,14 +196,14 @@ model Instructor {
 model Board {
   id        Int       @id @default(autoincrement())
   title     String
-  type      BoardType
+  type      BoardType @default(general)
   college   College   @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   collegeId Int
-  course    Course?
   Posts     Post[]
   createdBy User?     @relation(fields: [userId], references: [id])
   userId    Int?
   createdAt DateTime  @default(now())
+  courses   Course[]
 }
 
 enum BoardType {

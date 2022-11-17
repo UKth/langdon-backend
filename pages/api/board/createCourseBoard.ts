@@ -59,11 +59,6 @@ async function handler(
         },
       },
       type: "course",
-      course: {
-        connect: {
-          id: course.id,
-        },
-      },
       title: course.title,
       college: {
         connect: {
@@ -78,6 +73,16 @@ async function handler(
       .status(400)
       .json({ ok: false, error: errorMessages.board.boardNotCreated });
   }
+
+  const updateCourses = await client.course.updateMany({
+    where: {
+      courseId: course.courseId,
+      subjectCode: course.subjectCode,
+    },
+    data: {
+      boardId: board.id,
+    },
+  });
 
   return res.json({
     ok: true,
