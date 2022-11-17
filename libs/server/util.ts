@@ -211,12 +211,12 @@ export const mailHtmlGenerator = (code: number) => {
           <td width="600">
 
             <p style="font-size: 125%"><strong>Welcome to College Table</strong></p>
-            <p>
-              To verify your email address, enter the code below on the
-              verification page:
-            </p>
             <p style="font-size: 150%; text-align: center">
               <strong>${code}</strong>
+            </p>
+            <p>
+              To verify your email address, enter the code above on the
+              verification page
             </p>
             <p>
               This code will expire in 3 minutes after the email is sent. Once
