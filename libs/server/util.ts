@@ -210,7 +210,6 @@ export const mailHtmlGenerator = (code: number) => {
           <td></td>
           <td width="600">
 
-            <p style="font-size: 125%"><strong>Welcome to College Table</strong></p>
             <p style="font-size: 150%; text-align: center">
               <strong>${code}</strong>
             </p>
