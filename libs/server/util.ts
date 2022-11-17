@@ -12,7 +12,7 @@ export interface ResponseType {
 }
 
 export const isFriend = async (userId: number, targetId: number) => {
-  const friend = await client.friend.findMany({
+  const friend = await client.friend.findFirst({
     where: {
       OR: [
         {
@@ -23,9 +23,8 @@ export const isFriend = async (userId: number, targetId: number) => {
         },
       ],
     },
-    take: 1,
   });
-  return !!friend.length;
+  return !!friend;
 };
 
 export const validBoard = async (collegeId: number, boardId: number) => {

@@ -68,6 +68,7 @@ export const errorMessages = {
     collegeNotMatched: "You can only be a friend with same college's user.",
     invalidRequest: "The link is invalid. Please try again.",
     noFriendWithTarget: "You can only get your friend's classes.",
+    deleteNotFriend: "You're not friend with the user.",
   },
   class: {
     classNotFound: "Class not found.",
