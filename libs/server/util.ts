@@ -211,7 +211,7 @@ export const mailHtmlGenerator = (code: number) => {
           <td width="600">
 
             <p style="font-size: 150%; text-align: center">
-              <strong>${code}</strong>
+              <strong>[${code}]</strong>
             </p>
             <p>
               To verify your email address, enter the code above on the
