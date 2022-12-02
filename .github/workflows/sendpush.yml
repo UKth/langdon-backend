@@ -1,6 +1,8 @@
 name: "Send Push"
 
 on:
+  push:
+    branches: [master]
   schedule:
     - cron: "* * * * *"
 
