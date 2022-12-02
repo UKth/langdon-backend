@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send push
-        run: curl -d '${{ secrets.ADMIN_PASSWORD }}' -X POST https://collegetable.vercel.app/api/sendPushTest
+        run: curl -d 'adminPassword=${{ secrets.ADMIN_PASSWORD }}' -X POST https://collegetable.vercel.app/api/sendPushTest
