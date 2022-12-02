@@ -75,10 +75,35 @@ export type contentType = {
   data?: any;
 };
 
-export const sendManyPush = (pushList: {
-  pushToken: string;
-  content: contentType;
-}) => {};
+export const sendManyPush = async (
+  pushList: {
+    pushToken: string;
+    content: contentType;
+  }[]
+) => {
+  const messageList = pushList.map(({ pushToken, content }) => ({
+    to: pushToken,
+    sound: "default",
+    title: "College Table",
+    ...content,
+  }));
+
+  console.log(
+    `${pushList.length} push sending...\n` +
+      JSON.stringify(messageList[0]) +
+      " and more"
+  );
+
+  await fetch("https://exp.host/--/api/v2/push/send", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Accept-encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(messageList),
+  });
+};
 
 export const sendOnePush = async (pushToken: string, content: contentType) => {
   // TODO

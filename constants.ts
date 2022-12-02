@@ -1,8 +1,10 @@
-const min_ts = 60 * 1000;
-export const VERIFICATION_CODE_EXPIRATION = 3 * min_ts;
-export const ACCESS_TOKEN_EXPIRATION = 1 * 60 * min_ts;
-export const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * min_ts; // 30days
-export const REFRESH_TOKEN_RENEWAL = 10 * 24 * min_ts; // 10days
+export const MIN_TS = 60 * 1000;
+export const HOUR_TS = 60 * MIN_TS;
+export const DAY_TS = 24 * HOUR_TS;
+export const VERIFICATION_CODE_EXPIRATION = 3 * MIN_TS;
+export const ACCESS_TOKEN_EXPIRATION = 1 * HOUR_TS;
+export const REFRESH_TOKEN_EXPIRATION = 30 * DAY_TS; // 30days
+export const REFRESH_TOKEN_RENEWAL = 10 * DAY_TS; // 10days
 
 export const SUPPORT_EMAIL = "collegetable.dev@gmail.com";
 

@@ -2,11 +2,11 @@ name: "Send Push"
 
 on:
   schedule:
-    - cron: "0 23 * * *" # every 5pm for WI time
+    - cron: "30 23 * * *" # every 5:30pm for WI time
 
 jobs:
   send-push:
     runs-on: ubuntu-latest
     steps:
       - name: Send push
-        run: curl -d 'adminPassword=${{ secrets.ADMIN_PASSWORD }}' -X POST https://collegetable.vercel.app/api/sendPushTest
+        run: curl -d 'adminPassword=${{ secrets.ADMIN_PASSWORD }}' -X POST https://collegetable.vercel.app/api/sendPopularPostPush
