@@ -88,6 +88,8 @@ export const errorMessages = {
     updateOthersPost: "You can only update your post.",
     postNotUpdated: "Post not updated. Please try again.",
     postsLoadFailed: "Failed to get posts. Please try again.",
+    likeFailed: "Failed to like post.",
+    unlikeFailed: "Failed to unlike post.",
   },
   comment: {
     invalidPost: "You can't write a comment in the post.",
