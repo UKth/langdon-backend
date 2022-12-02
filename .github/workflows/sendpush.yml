@@ -1,8 +1,8 @@
-name: Send push
+name: "Send Push"
 
 on:
   schedule:
-    - cron: "*/2 * * * *" # at every 2 minutes
+    - cron: "*/2 * * * *"
 
 jobs:
   send-push:
