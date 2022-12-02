@@ -48,7 +48,7 @@ async function handler(
 
   console.log(popularPost);
   if (popularPost) {
-    sendManyPush(
+    await sendManyPush(
       users.map((user) => ({
         pushToken: user.pushToken,
         content: {
@@ -67,6 +67,7 @@ async function handler(
 
   return res.json({
     ok: true,
+    post: popularPost,
   });
 }
 
