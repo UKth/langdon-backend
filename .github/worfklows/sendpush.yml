@@ -1,0 +1,15 @@
+name: Send push
+
+on:
+  schedule:
+    - cron: "*/2 * * * *" # at every 2 minutes
+
+jobs:
+  send-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://collegetable.vercel.app/api/sendPushTest"
+          method: "POST"
+          adminPassword: ${{ secrets.ADMIN_PASSWORD }}
