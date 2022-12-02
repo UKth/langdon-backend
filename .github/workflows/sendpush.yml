@@ -2,7 +2,7 @@ name: "Send Push"
 
 on:
   schedule:
-    - cron: "*/2 * * * *"
+    - cron: "* * * * *"
 
 jobs:
   send-push:
