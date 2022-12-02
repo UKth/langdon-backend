@@ -4,13 +4,16 @@ import { handleDates, ResponseType, validBoard } from "@libs/server/util";
 
 import { errorMessages } from "@constants";
 import withHandler from "@libs/server/withHandler";
+import { User } from "@prisma/client";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>,
   {
+    user,
     collegeId,
   }: {
+    user: User;
     collegeId: number;
   }
 ) {
@@ -75,6 +78,17 @@ async function handler(
       .json({ ok: false, error: errorMessages.post.postNotFound });
   }
 
+  const isLiked = await client.post.findFirst({
+    where: {
+      id: post.id,
+      likedUsers: {
+        some: {
+          id: user.id,
+        },
+      },
+    },
+  });
+
   return res.json({
     ok: true,
     post: handleDates({
@@ -86,6 +100,7 @@ async function handler(
             },
           }
         : {}),
+      isLiked: !!isLiked,
     }),
     lastCommentId,
   });
