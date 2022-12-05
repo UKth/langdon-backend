@@ -28,14 +28,14 @@ async function handler(
     take: 100,
   });
 
-  const popularPost = await client.post.findFirst({
+  const newPost = await client.post.findFirst({
     select: {
       id: true,
       title: true,
     },
     where: {
       createdAt: {
-        gt: new Date(Date.now() - 10 * DAY_TS),
+        gt: new Date(Date.now() - 1 * DAY_TS),
         lt: new Date(),
       },
     },
@@ -46,18 +46,18 @@ async function handler(
     },
   });
 
-  console.log(popularPost);
-  if (popularPost) {
+  console.log(newPost);
+  if (newPost) {
     await sendManyPush(
       users.map((user) => ({
         pushToken: user.pushToken,
         content: {
-          subtitle: "The most popular post of yesterday.",
-          body: popularPost.title,
+          subtitle: "There's a new post yesterday.",
+          body: newPost.title,
           data: {
             route: "Post",
             params: {
-              id: popularPost.id,
+              id: newPost.id,
             },
           },
         },
@@ -67,7 +67,7 @@ async function handler(
 
   return res.json({
     ok: true,
-    post: popularPost,
+    post: newPost,
   });
 }
 
