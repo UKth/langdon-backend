@@ -20,18 +20,18 @@ async function handler(
     return res.status(400).json({ ok: false });
   }
 
-  const users = await client.user.findMany({
+  const users = (await client.user.findMany({
     select: {
       id: true,
       pushToken: true,
     },
     where: {
-      NOT: {
-        pushToken: undefined,
+      pushToken: {
+        startsWith: "ExponentPushToken",
       },
     },
     take: 100,
-  });
+  })) as { id: number; pushToken: string }[];
 
   const newPost = await client.post.findFirst({
     select: {
@@ -51,7 +51,6 @@ async function handler(
     },
   });
 
-  console.log(newPost);
   if (newPost) {
     await sendManyPush(
       users.map((user) => ({
