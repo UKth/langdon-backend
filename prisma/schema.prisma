@@ -294,3 +294,10 @@ model CollegeSupportRequest {
 
   @@index([emailFooter])
 }
+
+model PushClicked {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  pushString String
+  createdAt  DateTime @default(now())
+}
