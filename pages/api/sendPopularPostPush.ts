@@ -25,6 +25,11 @@ async function handler(
       id: true,
       pushToken: true,
     },
+    where: {
+      NOT: {
+        pushToken: undefined,
+      },
+    },
     take: 100,
   });
 

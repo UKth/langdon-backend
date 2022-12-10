@@ -2,7 +2,7 @@ name: "Send Push"
 
 on:
   schedule:
-    - cron: "10 1 * * *" # every 7:10pm for WI time
+    - cron: "0 1 * * *" # every 7pm for WI time
 
 jobs:
   send-push:
