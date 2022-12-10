@@ -26,6 +26,7 @@ async function handler(
     content?: string;
     isAnonymous?: boolean;
   } = req.body;
+
   const isAnonymous = isAnon === undefined ? true : isAnon;
   if (!targetId || !content?.length) {
     return res
@@ -38,7 +39,7 @@ async function handler(
       AND: [
         { members: { some: { id: user.id } } },
         { members: { some: { id: targetId } } },
-        ...(postId ? [{ postId }] : []),
+        ...(postId ? [{ postId }] : [{ postId: null }]),
       ],
     },
   });
