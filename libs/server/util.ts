@@ -248,17 +248,17 @@ export const sendCourseSignal = async ({
 
     mailHtml += `
 
-    <p style="font-size: 120%; text-align: center">
+    <p style="font-size: 120%;">
       <strong>${course.courseDesignation}</strong>
     </p>
-    <p style="font-size: 110%; text-align: center">
+    <p style="font-size: 110%;">
       ${course.title}
     </p>`;
     for (let j = 0; j < users.length; j++) {
       const { email } = users[j];
       mailHtml += `
       <p>
-      ${email}
+        <a href = "mailto: ${email}">${email}</a>
       </p>`;
     }
     mailHtml += `
