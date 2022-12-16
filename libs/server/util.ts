@@ -1,5 +1,5 @@
 import client from "@libs/server/client";
-import { User } from "@prisma/client";
+import { CourseForCrsSigWithUserCourse, User } from "@prisma/client";
 import nodemailer, {
   SendMailOptions,
   SentMessageInfo,
@@ -150,7 +150,7 @@ export const sendCode = async ({
   address: string;
   code: number;
 }) => {
-  const mailhtml = mailHtmlGenerator(code);
+  const mailhtml = codeMailHtmlGenerator(code);
 
   return await sendMail({
     address,
@@ -218,7 +218,79 @@ export const getNameString = (user: User) => {
 
 export const whiteSpaceRemover = (text: string) => text.replace(/ /g, "");
 
-export const mailHtmlGenerator = (code: number) => {
+export const sendCourseSignal = async ({
+  address,
+  courseForCrsSigs,
+}: {
+  address: string;
+  courseForCrsSigs: CourseForCrsSigWithUserCourse[];
+}) => {
+  let mailHtml = "";
+  mailHtml += `
+  <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    <head>
+      <meta
+        http-equiv="Content-Type"
+        content="text/html; charset=UTF-8"
+      />
+      <title>College Table - KUSA Course Signal</title>
+    </head>
+
+    <body style="font-family: Calibri">
+      <table cellspacing="0" width="100%" role="presentation">
+        <tr>
+          <td></td>
+          <td width="600">`;
+
+  for (let i = 0; i < courseForCrsSigs.length; i++) {
+    const { course, users } = courseForCrsSigs[i];
+
+    mailHtml += `
+
+    <p style="font-size: 120%; text-align: center">
+      <strong>${course.courseDesignation}</strong>
+    </p>
+    <p style="font-size: 110%; text-align: center">
+      ${course.title}
+    </p>`;
+    for (let j = 0; j < users.length; j++) {
+      const { email } = users[j];
+      mailHtml += `
+      <p>
+      ${email}
+      </p>`;
+    }
+    mailHtml += `
+    <br>`;
+  }
+
+  mailHtml += `
+            <p style="text-align: right;"><strong>College Table Support</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td style="text-align: right">
+            <img
+              src="https://collegetable.vercel.app/logo_192x192.png"
+              alt="College Table"
+              height="60"
+              width="60"
+            />
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </body>
+  </html>`;
+  sendMail({
+    address,
+    subject: "College Table - KUSA Course Signal",
+    mailhtml: mailHtml,
+  });
+};
+
+export const codeMailHtmlGenerator = (code: number) => {
   return `
   <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
     <head>

@@ -20,6 +20,8 @@ export const termNames = {
   T_1234: "Spring 2023",
 };
 
+export const TermCodes = ["T_1232", "T_1234"];
+
 export const errorMessages = {
   user: {
     emailNotRecieved: "Email is required.",
@@ -116,6 +118,9 @@ export const errorMessages = {
   },
   collegeRequest: {
     requestNotCreated: "Request not sent. Please try again.",
+  },
+  courseSignal: {
+    invalidTermcode: "Invalid termcode.",
   },
   idRequired: "Id required.",
   loginRequired: "Login required.",

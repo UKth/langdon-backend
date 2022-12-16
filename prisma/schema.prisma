@@ -306,7 +306,7 @@ model PushClicked {
 
 model CourseSignal {
   id         Int               @id @default(autoincrement())
-  termCode   TermCode
+  termCode   TermCode          @unique
   courseData CourseForCrsSig[]
 }
 
