@@ -3,8 +3,18 @@ import client from "@libs/server/client";
 import { ResponseType, sendCourseSignal } from "@libs/server/util";
 
 import withHandler from "@libs/server/withHandler";
-import { CourseForCrsSigWithUserCourse, TermCode } from "@prisma/client";
+import { CourseForCrsSig, TermCode } from "@prisma/client";
 import { TermCodes } from "@constants";
+
+export type CourseForCrsSigWithUserCourse = CourseForCrsSig & {
+  users: {
+    email: string;
+  }[];
+  course: {
+    courseDesignation: string;
+    title: string;
+  };
+};
 
 async function handler(
   req: NextApiRequest,

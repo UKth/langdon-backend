@@ -1,10 +1,11 @@
 import client from "@libs/server/client";
-import { CourseForCrsSigWithUserCourse, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import nodemailer, {
   SendMailOptions,
   SentMessageInfo,
   Transporter,
 } from "nodemailer";
+import { CourseForCrsSigWithUserCourse } from "pages/api/courseSignal/sendMails";
 
 export interface ResponseType {
   ok: boolean;
