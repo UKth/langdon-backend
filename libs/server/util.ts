@@ -284,7 +284,7 @@ export const sendCourseSignal = async ({
       </table>
     </body>
   </html>`;
-  sendMail({
+  await sendMail({
     address,
     subject: "College Table - KUSA Course Signal",
     mailhtml: mailHtml,
