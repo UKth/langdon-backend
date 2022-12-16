@@ -15,40 +15,41 @@ model College {
   mailFooter String   @unique
   name       String   @unique
   activated  Boolean  @default(false)
-  User       User[]
-  Course     Course[]
-  Board      Board[]
-  Table      Table[]
+  users      User[]
+  courses    Course[]
+  boards     Board[]
+  tables     Table[]
 
   @@index([mailFooter])
   @@index([name])
 }
 
 model User {
-  id                Int        @id @default(autoincrement())
+  id                Int               @id @default(autoincrement())
   netId             String
-  email             String     @unique
-  college           College    @relation(fields: [collegeId], references: [id])
+  email             String            @unique
+  college           College           @relation(fields: [collegeId], references: [id])
   firstName         String
   middleName        String?
   lastName          String
   collegeId         Int
-  userFriends       Friend[]   @relation(name: "users")
-  friendUserFriends Friend[]   @relation(name: "friend_users")
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
+  userFriends       Friend[]          @relation(name: "users")
+  friendUserFriends Friend[]          @relation(name: "friend_users")
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
   boards            Board[]
   posts             Post[]
   comments          Comment[]
-  likedPost         Post[]     @relation("like_post")
-  likedComment      Comment[]  @relation("like_comment")
+  likedPost         Post[]            @relation("like_post")
+  likedComment      Comment[]         @relation("like_comment")
   reports           Report[]
   tables            Table[]
-  defaultTable      Table      @relation("default_table", fields: [defaultTableId], references: [id])
-  defaultTableId    Int        @unique
+  defaultTable      Table             @relation("default_table", fields: [defaultTableId], references: [id])
+  defaultTableId    Int               @unique
   pushToken         String
   messages          Message[]
   chatrooms         Chatroom[]
+  CourseForCrsSig   CourseForCrsSig[] @relation("course_signal")
 
   @@index([netId])
 }
@@ -107,8 +108,8 @@ model VerificationCode {
 }
 
 model Course {
-  id                              Int      @id @default(autoincrement())
-  college                         College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  id                              Int               @id @default(autoincrement())
+  college                         College           @relation(fields: [collegeId], references: [id], onDelete: Cascade)
   courseId                        String // 000441
   termCode                        TermCode
   subjectCode                     Int //112
@@ -122,8 +123,9 @@ model Course {
   title                           String
   classes                         Class[]
   collegeId                       Int
-  board                           Board?   @relation(fields: [boardId], references: [id])
+  board                           Board?            @relation(fields: [boardId], references: [id])
   boardId                         Int?
+  courseForCS                     CourseForCrsSig[]
 
   @@unique([courseId, termCode, subjectCode])
   @@index([collegeId, termCode, courseDesignationCompressed])
@@ -300,4 +302,19 @@ model PushClicked {
   userId     Int
   pushString String
   createdAt  DateTime @default(now())
+}
+
+model CourseSignal {
+  id         Int               @id @default(autoincrement())
+  termCode   TermCode
+  courseData CourseForCrsSig[]
+}
+
+model CourseForCrsSig {
+  id             Int          @id @default(autoincrement())
+  course         Course       @relation(fields: [courseId], references: [id])
+  courseId       Int
+  courseSignal   CourseSignal @relation(fields: [courseSignalId], references: [id])
+  courseSignalId Int
+  users          User[]       @relation("course_signal")
 }
