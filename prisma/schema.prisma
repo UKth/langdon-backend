@@ -49,7 +49,7 @@ model User {
   pushToken         String
   messages          Message[]
   chatrooms         Chatroom[]
-  CourseForCrsSig   CourseForCrsSig[] @relation("course_signal")
+  courseForCrsSigs  CourseForCrsSig[] @relation("course_signal")
 
   @@index([netId])
 }
