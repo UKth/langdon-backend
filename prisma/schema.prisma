@@ -71,6 +71,8 @@ model Table {
 enum TermCode {
   T_1232
   T_1234
+  T_1236
+  T_1242
 }
 
 model FriendRequest {
