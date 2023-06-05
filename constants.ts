@@ -18,6 +18,8 @@ export const EXPO_PUSH_API_URL = "https://exp.host/--/api/v2/push/send";
 export const termNames = {
   T_1232: "Fall 2022",
   T_1234: "Spring 2023",
+  T_1236: "Summer 2023",
+  T_1242: "Fall 2023",
 };
 
 export const TermCodes = ["T_1232", "T_1234"];
